@@ -33,7 +33,7 @@ public class WASDMovement : MonoBehaviour
     {
         //Read vector 2 value from move action
         // W = (0,1) , S = (0,-1) , A = (-1,0) , D = (1,0)
-        moveInput = value.get<Vector2>();
+        moveInput = value.Get<Vector2>();
     }
 
     // Update is called once per frame
