@@ -12,7 +12,7 @@ public class WASDMovement : MonoBehaviour
 
 
     //Stores a reference of the character controller component
-    private characterController controller;
+    private CharacterController controller;
 
 
     private Vector2 moveInput;
