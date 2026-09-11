@@ -42,7 +42,7 @@ public class WASDMovement : MonoBehaviour
    
    //Create a 3D movement direction
 
-   Vector3 move = transform.right * movevInput.x +
+   Vector3 move = transform.right * moveInput.x +
                   transform.forward * moveInput.y;
 
     // Prevent diagonal movement from being faster than just straight movements
