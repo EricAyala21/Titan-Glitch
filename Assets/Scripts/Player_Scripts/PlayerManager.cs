@@ -17,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     // Stores player's current vertical movement
     private Vector3 velocity;
 
+    public Light flashlight;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,9 +34,10 @@ public class PlayerManager : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
-    public void OnFlashlight(InputValue value)
+    public void OnFlashlight()
     {
-        
+        // Toggle flashlight on and off
+        flashlight.enabled = !flashlight.enabled;
     }
 
     // Update is called once per frame
