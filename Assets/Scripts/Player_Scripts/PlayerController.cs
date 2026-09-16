@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-
+#region Initializations
     // Resubmitting the Pull Request for the WASD Player movements for reviewer approval per the syllabus
     // This includes the player gravity, vectors, position, and WASD keybinds to move the human model in the game.
     /*  ===============
@@ -43,6 +43,11 @@ public class PlayerController : MonoBehaviour
     //Tracking of the  camera up/down rotations
     private float xRotation = 0f; 
 
+    //Player's Flashlight
+    public Light flashlight;
+#endregion
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -74,23 +79,29 @@ public class PlayerController : MonoBehaviour
         lookInput = value.Get<Vector2>();
     }
 
+    public void OnFlashlight()
+    {
+        // Toggle flashlight on and off
+        flashlight.enabled = !flashlight.enabled;
+    }
+
     public void OnZoom(InputValue value)
     {
         // camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, zoomFOV, Time.deltaTime * zoomSpeed);
         // camera.fieldOfView = zoomFOV;
         zooming = !zooming; // start zoom in/out
     }
+#endregion
 
     // Update is called once per frame
     void Update()
     {
-        
-        // Handle movement and camera controls
+        // Call Handlers denoted below to control the player
         HandleMovement();
         HandleCamera();
         HandleZoom();
     }
-#endregion
+
 
 #region Handlers
     void HandleMovement()
