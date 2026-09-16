@@ -1,3 +1,6 @@
+// Resubmission note: This code was originally merged in PR #2 without a
+// reviewer approval due to a workflow oversight. Opening this follow-up PR
+// so a teammate can formally review, per our Definition of Done.
 using UnityEngine;
 
 /// <summary>
@@ -23,3 +26,4 @@ public class AnomalyTestInput : MonoBehaviour
         }
     }
 }
+// End of resubmission note.
