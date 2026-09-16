@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
+
+    // Resubmitting the Pull Request for the WASD Player movements for reviewer approval per the syllabus
+    // This includes the player gravity, vectors, position, and WASD keybinds to move the human model in the game.
     /*  ===============
         Movement Variables
         =============== */
