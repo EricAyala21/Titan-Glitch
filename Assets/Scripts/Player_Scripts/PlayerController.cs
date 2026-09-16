@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
 
     public Camera camera;
     public float mouseSensitivity = 0.1f;
+    public float defaultFOV = 60f;
+    public float zoomFOV    = 30f;
+    public float zoomSpeed  = 10f;
+    private bool zooming    = false;
 
     //Stores a reference of the character controller component
     private CharacterController controller;
@@ -54,6 +58,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
+#region Onx Functions
     //Unity call this component because of the PlayerInput attached
     public void OnMove(InputValue value)
     {
@@ -71,7 +76,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnZoom(InputValue value)
     {
-        camera.fieldOfView = 30;
+        // camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, zoomFOV, Time.deltaTime * zoomSpeed);
+        // camera.fieldOfView = zoomFOV;
+        zooming = !zooming; // start zoom in/out
     }
 
     // Update is called once per frame
@@ -81,10 +88,11 @@ public class PlayerController : MonoBehaviour
         // Handle movement and camera controls
         HandleMovement();
         HandleCamera();
-
+        HandleZoom();
     }
+#endregion
 
-
+#region Handlers
     void HandleMovement()
     {
 
@@ -134,4 +142,19 @@ public class PlayerController : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseX);
     }
+
+    void HandleZoom()
+    {
+        if(zooming)
+        {
+            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, zoomFOV, Time.deltaTime * zoomSpeed);
+        }
+        else
+        {
+            camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, defaultFOV, Time.deltaTime * zoomSpeed);
+        }
+    }
 }
+
+
+#endregion
