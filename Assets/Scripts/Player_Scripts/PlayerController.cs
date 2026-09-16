@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
            Camera Variables
            =============== */
 
-    public Transform cameraTransform;
+    public Camera camera;
     public float mouseSensitivity = 0.1f;
 
     //Stores a reference of the character controller component
@@ -69,6 +69,11 @@ public class PlayerController : MonoBehaviour
         lookInput = value.Get<Vector2>();
     }
 
+    public void OnZoom(InputValue value)
+    {
+        camera.fieldOfView = 30;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -83,15 +88,15 @@ public class PlayerController : MonoBehaviour
     void HandleMovement()
     {
 
-    //Create a 3D movement direction
-   Vector3 move = transform.right * moveInput.x +
+        //Create a 3D movement direction
+        Vector3 move = transform.right * moveInput.x +
                   transform.forward * moveInput.y;
 
-    // Prevent diagonal movement from being faster than just straight movements
-    move = Vector3.ClampMagnitude(move, 1f);
+        // Prevent diagonal movement from being faster than just straight movements
+        move = Vector3.ClampMagnitude(move, 1f);
 
-    // Move the player horizontally
-    controller.Move (move * moveSpeed * Time.deltaTime);
+        // Move the player horizontally
+        controller.Move (move * moveSpeed * Time.deltaTime);
 
         // Applies gravity to the player to keep them grounded
         if (controller.isGrounded && velocity.y < 0)
@@ -121,7 +126,7 @@ public class PlayerController : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         //Rotates only the camera
-         cameraTransform.localRotation = 
+         camera.GetComponent<Transform>().localRotation = 
          Quaternion.Euler(xRotation, 0f,0f);
 
          //Rotating the entire player left and right using the wasd movements
