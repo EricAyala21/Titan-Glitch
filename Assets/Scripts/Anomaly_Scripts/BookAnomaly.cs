@@ -4,8 +4,8 @@ public class BookAnomaly : MonoBehaviour
 {
 
 //Creates a reference of the gameobject Book and a float interval for how long the visibility of the book will toggle on and off.
-[SerializedField] private GameObject book;
-[SerializedField] private float toggleInterval = 2f;
+[SerializeField] private GameObject book;
+[SerializeField] private float toggleInterval = 2f;
 
 //Starts off the anomaly being turned off until the player activates it or a condition occurs.
 private bool anomalyActive = false;
@@ -48,5 +48,12 @@ public void ResetAnomaly()
     public bool isAnomalyActive()
     {
         return anomalyActive;
+    }
+
+    private void Start()
+    {
+        //Ensures the book is active at the start of the game.
+        book.SetActive(true);
+        ActivateAnomaly();
     }
 }
