@@ -1943,7 +1943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1117858225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2303,6 +2303,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6687419012552083648, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_Color.b
+      value: 0.57899565
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687419012552083648, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_Color.g
+      value: 0.33773577
+      objectReference: {fileID: 0}
+    - target: {fileID: 6687419012552083648, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7715433112429929710, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2383,7 +2395,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: e2c12cc399276f34997617080b02d780, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1701393471}
   m_SourcePrefab: {fileID: 100100000, guid: e2c12cc399276f34997617080b02d780, type: 3}
 --- !u!1001 &1248222485
 PrefabInstance:
@@ -2820,6 +2835,32 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0699d22803476344d956abf42dc88970, type: 3}
+--- !u!1 &1701393467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: e2c12cc399276f34997617080b02d780, type: 3}
+  m_PrefabInstance: {fileID: 1246903036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1701393471
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701393467}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.118799396, y: 4.4218817, z: 5.3358364}
+  m_Center: {x: 0.042912297, y: 2.1870484, z: 0.39312506}
 --- !u!1001 &1881078911
 PrefabInstance:
   m_ObjectHideFlags: 0
