@@ -60,7 +60,6 @@ public class PlayerController : MonoBehaviour
 
         //Toggling of Cursor visibility
         Cursor.visible = false;
-
     }
 
 #region Onx Functions
@@ -100,6 +99,7 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleCamera();
         HandleZoom();
+        HandleIRFlashlight();
     }
 
 
@@ -164,6 +164,15 @@ public class PlayerController : MonoBehaviour
         {
             camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, defaultFOV, Time.deltaTime * zoomSpeed);
         }
+    }
+
+    void HandleIRFlashlight()
+    {
+        // Raycast hit;
+
+        // float distanceToObstacle = 0.0;
+
+        // if(Physics.SphereCast);
     }
 }
 
