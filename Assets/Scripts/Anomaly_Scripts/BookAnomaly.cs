@@ -50,6 +50,9 @@ public void ResetAnomaly()
         return anomalyActive;
     }
 
+
+    //Temporary Activation for testing purposes
+    // Can delete the start() method when game is ready
     private void Start()
     {
         //Ensures the book is active at the start of the game.
