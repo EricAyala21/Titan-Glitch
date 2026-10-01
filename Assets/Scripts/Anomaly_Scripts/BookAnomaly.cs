@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class BookAnomaly : MonoBehaviour
+public class BookAnomaly : AnomalyBase
 {
 
 //Creates a reference of the gameobject Book and a float interval for how long the visibility of the book will toggle on and off.
 [SerializeField] private GameObject book;
 [SerializeField] private float toggleInterval = 2f;
 
-//Starts off the anomaly being turned off until the player activates it or a condition occurs.
-private bool anomalyActive = false;
 
-public void ActivateAnomaly()
+
+public override void ActivateAnomaly()
     {
         if (anomalyActive)
         {
@@ -29,7 +28,7 @@ public void ActivateAnomaly()
         Debug.Log("Book Anomaly activated.");
     }
 
-public void ResetAnomaly()
+public override void ResetAnomaly()
     {
         anomalyActive = false;
         CancelInvoke(nameof(ToggleBookVisibility));
@@ -45,10 +44,6 @@ public void ResetAnomaly()
         book.SetActive(!book.activeSelf);
     }
 
-    public bool isAnomalyActive()
-    {
-        return anomalyActive;
-    }
 
 
     //Temporary Activation for testing purposes
