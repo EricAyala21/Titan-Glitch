@@ -3,7 +3,7 @@ using UnityEngine;
 //Reusable Anomaly template that can be accessed and easily copied and modified
 
 //Create an inheritable class called Anomaly Base
-public class AnomalyBase : MonoBehaviour
+public abstract class AnomalyBase : MonoBehaviour
 {
     //Name used to identify the anomaly in scope
     //Can be changed through the Unity Inspector without code editing
