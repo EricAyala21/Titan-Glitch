@@ -7,7 +7,7 @@ public class AnomalyBase : MonoBehaviour
 {
     //Name used to identify the anomaly in scope
     //Can be changed through the Unity Inspector without code editing
-[SerializedField] protected string anomalyName;
+[SerializeField] protected string anomalyName;
 
 //Tracking of the activation of the anomaly
 protected bool anomalyActive = false;
