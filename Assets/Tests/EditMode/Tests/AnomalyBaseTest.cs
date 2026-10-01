@@ -1,4 +1,4 @@
-using Nunit.Framework;
+using NUnit.Framework;
 using UnityEngine;
 
 //Test Version of Anomaly Base class to test the AnomalyBase class
@@ -26,7 +26,7 @@ public class AnomalyBaseTest
     public void Setup()
     {
         testObject = new GameObject("Test Anomaly");
-        testAnomaly = new testObject.AddComponent<TestAnomaly>();
+        testAnomaly = testObject.AddComponent<TestAnomaly>();
     }
 
     [TearDown]
@@ -48,6 +48,11 @@ public class AnomalyBaseTest
         testAnomaly.ActivateAnomaly();
         Assert.IsTrue(testAnomaly.IsActive);
         testAnomaly.ResetAnomaly();
+        Assert.IsFalse(testAnomaly.IsActive);
+    }
+    [Test]
+    public void AnomalyStartsInactive()
+    {
         Assert.IsFalse(testAnomaly.IsActive);
     }
 }
