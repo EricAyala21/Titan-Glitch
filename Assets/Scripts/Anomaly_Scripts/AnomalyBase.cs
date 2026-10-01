@@ -12,6 +12,9 @@ public abstract class AnomalyBase : MonoBehaviour
 //Tracking of the activation of the anomaly
 protected bool anomalyActive = false;
 
+// allows other scripts and test to check the active state
+public bool IsActive => anomalyActive;
+
 //Allows future scripts to read the anomalyName without changing it's code
 public string AnomalyName => anomalyName;
 
