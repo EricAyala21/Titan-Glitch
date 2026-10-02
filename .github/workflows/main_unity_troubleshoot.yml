@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-
   pull_request:
     branches:
       - main
-
   workflow_dispatch:
 
 jobs:
@@ -22,15 +20,19 @@ jobs:
         with:
           lfs: true
 
+      # FIX 1: Add a virtual swap space to provide the extra RAM your build demands
+      - name: Set up Swap Space (Prevents Exit Code 137)
+        uses: pierotofy/set-swap-space@v1.0
+        with:
+          swap-size-gb: 12
+
       # Display available runner resources
       - name: Check runner resources
         run: |
           echo "===== MEMORY ====="
           free -h
-
           echo "===== DISK ====="
           df -h
-
           echo "===== UNITY VERSION ====="
           cat ProjectSettings/ProjectVersion.txt
 
@@ -58,9 +60,12 @@ jobs:
           versioning: Custom
           version: ${{ env.BUILD_VERSION }}
 
-          # Reserve some memory for the GitHub runner itself
-          dockerMemoryLimit: 12g
+          # FIX 2: Align container limit with your new available virtual RAM (7GB native + 12GB swap)
+          dockerMemoryLimit: 14g
           dockerCpuLimit: 2
+
+          # FIX 3: Keep Unity's concurrent shader compilation threads low to stop massive memory spikes
+          customParameters: "-mshc 2"
 
       # Try to determine whether Linux killed Unity because of memory
       - name: Show failure diagnostics
@@ -68,10 +73,8 @@ jobs:
         run: |
           echo "===== MEMORY AFTER FAILURE ====="
           free -h
-
           echo "===== DISK AFTER FAILURE ====="
           df -h
-
           echo "===== POSSIBLE OOM MESSAGES ====="
           sudo dmesg | grep -Ei "out of memory|oom|killed process" || true
 
