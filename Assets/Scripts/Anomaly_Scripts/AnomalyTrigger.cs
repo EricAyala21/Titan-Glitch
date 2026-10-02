@@ -8,7 +8,7 @@ public class AnomalyTrigger : MonoBehaviour
     {
         if(collider.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player has entered the anomaly trigger.");
+            Debug.Log("BOO!");
             playerInTrigger = true;
         }
     }
