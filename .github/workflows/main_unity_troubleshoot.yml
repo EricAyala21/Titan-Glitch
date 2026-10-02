@@ -22,13 +22,13 @@ jobs:
         with:
           lfs: true
 
-      # FIX 1: Provide virtual RAM space to offset Unity's high allocation peaks
+      # Provide virtual RAM space to offset Unity's high allocation peaks
       - name: Set up Swap Space (Prevents Exit Code 137)
         uses: pierotofy/set-swap-space@v1.0
         with:
           swap-size-gb: 12
 
-      # FIX 2: Cache Unity's Library directory to drastically cut build durations
+      # Cache Unity's Library directory to drastically cut build durations
       - name: Cache Unity Library
         uses: actions/cache@v4
         with:
@@ -54,7 +54,8 @@ jobs:
           echo "BUILD_VERSION=0.2.${{ github.run_number }}" >> $GITHUB_ENV
           echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-       Sir-name: Display build information
+      # Display build information
+      - name: Display build information
         run: |
           echo "Game Version: $BUILD_VERSION"
           echo "Git Commit: $COMMIT_SHA"
@@ -72,11 +73,11 @@ jobs:
           versioning: Custom
           version: ${{ env.BUILD_VERSION }}
 
-          # FIX 3: Re-align the container limits to play nice with host resources
+          # Re-align the container limits to play nice with host resources
           dockerMemoryLimit: 14g
           dockerCpuLimit: 2
 
-          # FIX 4: Clamp concurrent shader pipelines down to level out RAM spike plateaus
+          # Clamp concurrent shader pipelines down to level out RAM spike plateaus
           customParameters: "-mshc 2"
 
       # Try to determine whether Linux killed Unity because of memory
