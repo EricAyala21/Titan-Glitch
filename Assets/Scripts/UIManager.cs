@@ -10,28 +10,31 @@ public class UIManager : MonoBehaviour
         isPaused = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            isPaused = !isPaused;
+            TogglePause();
+        }
+    }
 
-            if (isPaused)
-            {
-                pauseMenu.SetActive(true);
-                Time.timeScale = 0f;
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
+    public void TogglePause()
+    {
+        isPaused = !isPaused;
 
-            }
-            else
-            {
-                pauseMenu.SetActive(false);
-                Time.timeScale = 1f;
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-            }
+        if (isPaused)
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
