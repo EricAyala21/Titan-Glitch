@@ -1,6 +1,5 @@
 name: Unity CI
 
-# Run whenever code is pushed or merged into main
 on:
   push:
     branches:
@@ -18,36 +17,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      # Download the repository onto the GitHub runner
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           lfs: true
 
-      # Cache Unity's Library folder to speed up repeat builds
-      - name: Cache Library folder
-        uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-StandaloneWindows64-${{ hashFiles('Packages/manifest.json') }}
-          restore-keys: |
-            Library-StandaloneWindows64-
-            Library-
+      # Display available runner resources
+      - name: Check runner resources
+        run: |
+          echo "===== MEMORY ====="
+          free -h
 
-      # Create a unique version number for each build
+          echo "===== DISK ====="
+          df -h
+
+          echo "===== UNITY VERSION ====="
+          cat ProjectSettings/ProjectVersion.txt
+
+      # Create build version
       - name: Set build version
         run: |
           echo "BUILD_VERSION=0.2.${{ github.run_number }}" >> $GITHUB_ENV
           echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-      # Display build information in GitHub Actions
       - name: Display build information
         run: |
           echo "Game Version: $BUILD_VERSION"
           echo "Git Commit: $COMMIT_SHA"
 
-      # Build the Unity project
+      # Build Unity project
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4
         env:
@@ -59,20 +57,24 @@ jobs:
           buildName: TitanGlitch
           versioning: Custom
           version: ${{ env.BUILD_VERSION }}
-          collectUnityLogs: true
-          streamUnityLogs: true
 
-      # Upload Unity diagnostic logs even if the build fails
-      - name: Upload Unity Diagnostic Logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Unity-Diagnostics-${{ github.run_number }}
-          path: Logs/UnityDiagnostics/
-          retention-days: 14
-          if-no-files-found: warn
+          # Reserve some memory for the GitHub runner itself
+          dockerMemoryLimit: 12g
+          dockerCpuLimit: 2
 
-      # Upload the finished game only if the build succeeds
+      # Try to determine whether Linux killed Unity because of memory
+      - name: Show failure diagnostics
+        if: failure()
+        run: |
+          echo "===== MEMORY AFTER FAILURE ====="
+          free -h
+
+          echo "===== DISK AFTER FAILURE ====="
+          df -h
+
+          echo "===== POSSIBLE OOM MESSAGES ====="
+          sudo dmesg | grep -Ei "out of memory|oom|killed process" || true
+
       - name: Upload Build Artifact
         if: success()
         uses: actions/upload-artifact@v4
