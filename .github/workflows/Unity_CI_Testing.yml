@@ -1,0 +1,80 @@
+
+name: Unity CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Unity Project
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout Unity project
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Cache Unity Library
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-StandaloneWindows64-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-StandaloneWindows64-
+
+      # Generate build version
+      - name: Set build version
+        run: |
+          echo "BUILD_VERSION=0.2.${{ github.run_number }}" >> "$GITHUB_ENV"
+          echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+      - name: Display build information
+        run: |
+          echo "Game Version: $BUILD_VERSION"
+          echo "Git Commit: $COMMIT_SHA"
+
+      # Verify Unity secrets exist
+      - name: Verify Unity secrets
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        run: |
+          for secret in UNITY_LICENSE UNITY_EMAIL UNITY_PASSWORD; do
+            if [ -z "${!secret}" ]; then
+              echo "::error::$secret is missing"
+              exit 1
+            fi
+          done
+          echo "Unity secrets are available."
+
+      # Build Unity project
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          buildName: TitanGlitch
+          versioning: Custom
+          version: ${{ env.BUILD_VERSION }}
+
+      # Upload build artifact
+      - name: Upload Build Artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TitanGlitch-StandaloneWindows64-v${{ env.BUILD_VERSION }}
+          path: build/StandaloneWindows64
+          retention-days: 14
