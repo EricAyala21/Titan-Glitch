@@ -116,6 +116,18 @@ public class AnomalyBaseTest
 
             Assert.IsTrue(testAnomaly.IsActive);
             Assert.IsFalse(secondAnomaly.IsActive);
+
+            secondAnomaly.ActivateAnomaly();
+            Assert.IsTrue(secondAnomaly.IsActive);
+
+            testAnomaly.ResetAnomaly();
+
+            Assert.IsFalse(testAnomaly.IsActive);
+            Assert.IsTrue(secondAnomaly.IsActive);
+        }
+        finally
+        {
+            Object.DestroyImmediate(secondObject);
         }
     }
 }
