@@ -47,14 +47,26 @@ public class AnomalyBaseTest
     {
         testAnomaly.ActivateAnomaly();
         Assert.IsTrue(testAnomaly.IsActive);
+
         testAnomaly.ResetAnomaly();
         Assert.IsFalse(testAnomaly.IsActive);
+
         testAnomaly.ActivateAnomaly();
         Assert.IsTrue(testAnomaly.IsActive);
     }
+    
     [Test]
     public void AnomalyStartsInactive()
     {
         Assert.IsFalse(testAnomaly.IsActive);
+    }
+
+    [Test]
+    public void ActivateAnomalyTwiceRemainsActive()
+    {
+        testAnomaly.ActivateAnomaly();
+        testAnomaly.ActivateAnomaly();
+
+        Assert.IsTrue(testAnomaly.IsActive);
     }
 }
