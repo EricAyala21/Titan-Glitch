@@ -130,4 +130,6 @@ public class AnomalyBaseTest
             Object.DestroyImmediate(secondObject);
         }
     }
+
+    //Test works as intended
 }
