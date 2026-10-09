@@ -87,4 +87,35 @@ public class AnomalyBaseTest
         testAnomaly.ResetAnomaly();
         Assert.IsFalse(testAnomaly.IsActive);
     }
+
+    [Test]
+    public void MultipleActivationResetCycles()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            testAnomaly.ActivateAnomaly();
+            Assert.IsTrue(testAnomaly.IsActive);
+
+            testAnomaly.ResetAnomaly();
+            Assert.IsFalse(testAnomaly.IsActive);
+        }
+    }
+
+    [Test]
+    public void TwoAnomaliesOperateIndependently()
+    {
+        GameObject secondObject = new GameObject("Second Test Anomaly");
+
+        try
+        {
+            TestAnomaly secondAnomaly = secondObject.AddComponent<TestAnomaly>();
+            
+
+            Assert.IsFalse(secondAnomaly.IsActive);
+            testAnomaly.ActivateAnomaly();
+
+            Assert.IsTrue(testAnomaly.IsActive);
+            Assert.IsFalse(secondAnomaly.IsActive);
+        }
+    }
 }
