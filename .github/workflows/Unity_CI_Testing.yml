@@ -1,0 +1,132 @@
+
+name: Unity CI
+
+# Run when code is pushed or merged into main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Unity Project
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download project from GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # Cache Unity Library to speed up future builds
+      - name: Cache Unity Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-StandaloneWindows64-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-StandaloneWindows64-
+
+      # Display system information
+      - name: Check runner resources
+        run: |
+          echo "===== MEMORY ====="
+          free -h
+
+          echo "===== DISK ====="
+          df -h
+
+          echo "===== UNITY VERSION ====="
+          cat ProjectSettings/ProjectVersion.txt
+
+      # Generate unique build version
+      - name: Set build version
+        run: |
+          echo "BUILD_VERSION=0.2.${{ github.run_number }}" >> "$GITHUB_ENV"
+          echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+      # Display version information
+      - name: Display build information
+        run: |
+          echo "Game Version: $BUILD_VERSION"
+          echo "Git Commit: $COMMIT_SHA"
+
+      # Check Unity Personal secrets
+      - name: Verify Unity secrets
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        run: |
+          for secret in UNITY_LICENSE UNITY_EMAIL UNITY_PASSWORD; do
+            if [ -z "${!secret}" ]; then
+              echo "::error::$secret is missing"
+              exit 1
+            fi
+          done
+
+          echo "All Unity secrets are available."
+
+      # Build the Unity project
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          buildName: TitanGlitch
+          versioning: Custom
+          version: ${{ env.BUILD_VERSION }}
+
+          # Collect Unity diagnostic logs
+          collectUnityLogs: true
+
+          # Stream Unity logs to GitHub Actions
+          streamUnityLogs: true
+
+      # Upload diagnostic logs even if build fails
+      - name: Upload Unity Diagnostic Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Unity-Diagnostics
+          path: ${{ github.workspace }}/Logs/UnityDiagnostics/
+          retention-days: 14
+          if-no-files-found: warn
+
+      # Show information if build fails
+      - name: Show failure diagnostics
+        if: failure()
+        run: |
+          echo "===== MEMORY ====="
+          free -h
+
+          echo "===== DISK ====="
+          df -h
+
+          echo "===== POSSIBLE OOM EVENTS ====="
+          sudo dmesg | grep -Ei "out of memory|oom|killed process" || true
+
+          echo "===== BEE BUILD LOG ====="
+          if [ -f Library/Bee/bee_backend.log ]; then
+            tail -n 150 Library/Bee/bee_backend.log
+          else
+            echo "Bee log not found."
+          fi
+
+      # Upload completed Windows build
+      - name: Upload Build Artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: TitanGlitch-StandaloneWindows64-v${{ env.BUILD_VERSION }}
+          path: build/StandaloneWindows64
+          retention-days: 14
+          if-no-files-found: warn
