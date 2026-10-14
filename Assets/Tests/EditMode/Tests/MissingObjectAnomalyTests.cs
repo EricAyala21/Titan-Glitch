@@ -50,4 +50,25 @@ public class MissingObjectAnomalyTests
         Assert.AreNotEqual(initialState, targetObject.activeSelf, "Toggle() should flip the target object's active state.");
     }
 
+    [Test]
+    public void InitialState_TargetObjectIsVisible()
+    {
+        Assert.IsTrue(targetObject.activeSelf, "Target object should be visible before the anomaly is activated.");
+    }
+
+    [Test]
+    public void ActivateTwice_TargetObjectStaysHidden()
+    {
+        anomaly.ActivateAnomaly();
+        anomaly.ActivateAnomaly();
+        Assert.IsFalse(targetObject.activeSelf, "Target object should stay hidden after activating twice.");
+    }
+
+    [Test]
+    public void ResetWhileInactive_TargetObjectStaysVisible()
+    {
+        anomaly.ResetAnomaly();
+        Assert.IsTrue(targetObject.activeSelf, "Target object should stay visible when reset while already normal.");
+    }
+
 }
