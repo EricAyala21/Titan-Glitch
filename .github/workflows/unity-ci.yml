@@ -98,3 +98,4 @@ jobs:
           name: Unity-EditMode-Test-Results
           path: test-results
           if-no-files-found: warn
+          retention-days: 14
