@@ -9,7 +9,12 @@ on:
     branches:
       - main  
   workflow_dispatch:
+  
+permissions:
+  contents: read
+  checks: write
 
+  
 jobs:
   build:
     name: Build Unity Project
