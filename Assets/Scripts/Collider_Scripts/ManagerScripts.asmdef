@@ -1,0 +1,16 @@
+{
+    "name": "ManagerScripts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:274f600cbdbffb74ea1b0680cda06791"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
