@@ -1,16 +1,6 @@
+using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
-
-public class WASDMovementTest : MonoBehaviour
-{
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.TestFramework;
+using UnityEngine.TestTools;
