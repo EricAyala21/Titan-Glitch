@@ -51,9 +51,26 @@ public class MissingObjectAnomalyTests
     }
 
     [Test]
-    public void InitialState_TargetObjectIsVisible()
+    public void InitialState_StartResetsAnomalyToNormal()
     {
-        Assert.IsTrue(targetObject.activeSelf, "Target object should be visible before the anomaly is activated.");
+    // Default state
+    Assert.IsFalse(anomaly.IsAnomalous, "Anomaly should start non-anomalous.");
+    Assert.IsTrue(targetObject.activeSelf, "Target object should start visible.");
+
+    // Arrange: put the anomaly into an abnormal state
+    anomaly.ActivateAnomaly();
+    Assert.IsTrue(anomaly.IsAnomalous);
+    Assert.IsFalse(targetObject.activeSelf);
+
+    // Act: invoke Unity's private Start() (EditMode doesn't call it automatically)
+    MethodInfo startMethod = typeof(MissingObjectAnomaly).GetMethod(
+        "Start", BindingFlags.NonPublic | BindingFlags.Instance);
+    Assert.IsNotNull(startMethod, "Start() method was not found.");
+    startMethod.Invoke(anomaly, null);
+
+    // Assert: Start() restored the normal state
+    Assert.IsFalse(anomaly.IsAnomalous, "Anomaly should be inactive after Start().");
+    Assert.IsTrue(targetObject.activeSelf, "Target object should be visible after Start().");
     }
 
     [Test]
