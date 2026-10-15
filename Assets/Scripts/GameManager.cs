@@ -1,9 +1,11 @@
+
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-  [SerializeField] private Door_win_loss DoorSide;
-  //[SerializeField] private AnomalyManager anomalyManager;
+    [SerializeField] private Door_win_loss DoorSide;
+    [SerializeField] private AnomalyManager anomalyManager;
 
     public enum GameState
     {
@@ -14,21 +16,9 @@ public class GameManager : MonoBehaviour
         Validation,
         Feedback,
         Progression,
-        FailureReset,
+        Failure,
         Victory,
         Paused
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public GameState CurrentState { get; private set; }
@@ -40,74 +30,119 @@ public class GameManager : MonoBehaviour
         switch (newState)
         {
             case GameState.MainMenu:
-               // EnterMainMenu();
                 break;
 
             case GameState.TutorialBaseline:
-               // EnterTutorialBaseline();
                 break;
 
             case GameState.Exploring:
-              //  EnterExploring();
                 break;
 
             case GameState.Decision:
-              //  EnterDecision();
                 break;
 
             case GameState.Validation:
-              //  EnterValidation();
                 break;
 
             case GameState.Feedback:
-              //  EnterFeedback();
                 break;
 
             case GameState.Progression:
-               // EnterProgression();
+                EnterProgression();
                 break;
 
-            case GameState.FailureReset:
-               // EnterFailureReset();
+            case GameState.Failure:
+                EnterFailure();
                 break;
 
             case GameState.Victory:
-              //  EnterVictory();
+                EnterVictory();
                 break;
 
             case GameState.Paused:
-              //  EnterPaused();
                 break;
         }
     }
-    /*---------------------------------------------------------------------------------------------
-    DoorSelected(DoorType) selectedDoor
-    - Takes in door type 
-    - takes in anomalyState for the level
-    -Checks anomaly state and door state
-    - if door state is left and annomaly is incative (anomalyState && selectedDoor == Left)
-      - Level failed
-      -else if anomaly is active then passed
-    - if door state is right and anomaly is inactive (!anomalyState && selectedDoor == Right)
-      -passed 
-      -else failed 
-      --------------------------------------------------------------------------------------------
-    */
+
     public void DoorSelected(DoorType selectedDoor)
     {
-      //bool anomalyState = anomalyManager.AnomalyActive 
-      if(selectedDoor == DoorType.Left)
-      {
-            //pass
-        Debug.Log("Left");
-
-        }else if(selectedDoor == DoorType.Right)
+        if (selectedDoor == DoorType.Left)
         {
-          Debug.Log("Right");
-        }else{
-            //fail
+            // Currently the successful door.
+            Debug.Log("Left Door Selected");
+            ChangeState(GameState.Progression);
+        }
+        else if (selectedDoor == DoorType.Right)
+        {
+            // Currently the incorrect door.
+            Debug.Log("Right Door Selected");
+            ChangeState(GameState.Failure);
+        }
+    }
+
+    private void EnterFailure()
+    {
+        Debug.Log("Level Failed - Retrying Same Anomaly");
+
+        // Do NOT mark the anomaly completed.
+        // AnomalyManager remembers which one was active.
+        CurrentState = GameState.Exploring;
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
+    }
+
+    private void EnterProgression()
+    {
+        if (anomalyManager == null)
+        {
+            Debug.LogError(
+                "AnomalyManager reference is missing!"
+            );
+            return;
         }
 
+        if (anomalyManager.CurrentAnomalyIndex < 0)
+        {
+            Debug.LogError("No active anomaly to complete.");
+            return;
+        }
 
+        // Mark the current anomaly completed.
+        bool allCompleted =
+            anomalyManager.CompleteCurrentAnomaly();
+
+        // Check if there are any anomalies remaining.
+        if (allCompleted)
+        {
+            ChangeState(GameState.Victory);
+            return;
+        }
+
+        Debug.Log("Level Passed - Loading Next Anomaly");
+
+        CurrentState = GameState.Exploring;
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
+    }
+
+    private void EnterVictory()
+    {
+        Debug.Log("You Win!");
+
+        // TODO: Display victory UI or load victory scene.
+    }
+
+    // Use this when the player starts a completely new game.
+    public void StartNewGame()
+    {
+        AnomalyManager.ResetRun();
+
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
     }
 }

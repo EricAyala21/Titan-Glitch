@@ -4091,6 +4091,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6820856683468163493, guid: fe1b0031d1ac3fa43956700923971111, type: 3}
+      propertyPath: anomalyManager
+      value: 
+      objectReference: {fileID: 392880915}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
