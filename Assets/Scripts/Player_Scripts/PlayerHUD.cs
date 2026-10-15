@@ -22,7 +22,7 @@ public class PlayerHUD : MonoBehaviour
         if (anomalyManager == null)
         {
             anomalyManager =
-                FindFirstObjectByType<AnomalyManager>();
+            FindAnyObjectByType<AnomalyManager>();
         }
 
         UpdateHUD();
