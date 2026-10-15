@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FlashlightInputTests : InputTestFixture
+public class FlashlightInputTetss : InputTestFixture
 {
     private GameObject player;
     private GameObject flashlight;
@@ -18,22 +18,35 @@ public class FlashlightInputTests : InputTestFixture
 
         // Load the configured player prefab.
         var prefab = Resources.Load<GameObject>(
-            "TestPlayer"
+            "Player"
         );
 
         Assert.IsNotNull(prefab);
 
         player = Object.Instantiate(prefab);
+        PlayerInput playerInput = player.GetComponent<PlayerInput>();
+
+        Assert.IsNotNull(playerInput, "PlayerInput comp not found");
+
+        playerInput.enabled = true;
+        playerInput.ActivateInput();
 
         // Find the flashlight child object.
         flashlight = player.transform
-            .Find("Flashlight").gameObject;
+            .Find("Main Camera/Flashlight").gameObject;
 
         Assert.IsNotNull(flashlight);
 
         // Ensure the PlayerInput component exists.
         var input = player.GetComponent<PlayerInput>();
         Assert.IsNotNull(input);
+
+        // Check that we've enabled player, and their input is enabled
+        Debug.Log("Player active: " + player.activeInHierarchy);
+        Debug.Log("PlayerInput enabled: " + playerInput.enabled);
+        Debug.Log("PlayerInput active: " + playerInput.isActiveAndEnabled);
+        Debug.Log("Current map: " +
+            playerInput.currentActionMap?.name);
 
         input.SwitchCurrentActionMap("Player");
 
@@ -69,3 +82,4 @@ public class FlashlightInputTests : InputTestFixture
         base.TearDown();
     }
 }
+
