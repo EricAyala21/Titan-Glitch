@@ -1,48 +1,52 @@
+
 using UnityEngine;
 using TMPro;
 
-// Displays the player's current level and score.
+// Player HUD for Titan Glitch
+// Displays the current level and score.
 public class PlayerHUD : MonoBehaviour
 {
     [Header("HUD Text References")]
     [SerializeField] private TMP_Text levelText;
     [SerializeField] private TMP_Text scoreText;
 
-    private int currentLevel = 1;
-    private int currentScore = 0;
+    [Header("Game References")]
+    [SerializeField] private AnomalyManager anomalyManager;
+
+    [Header("Score Settings")]
+    [SerializeField] private int pointsPerLevel = 100;
 
     private void Start()
     {
+        // Find the AnomalyManager if not assigned.
+        if (anomalyManager == null)
+        {
+            anomalyManager =
+                FindFirstObjectByType<AnomalyManager>();
+        }
+
         UpdateHUD();
     }
 
-    public void SetLevel(int level)
+    // Update the level and score displayed on screen.
+    public void UpdateHUD()
     {
-        currentLevel = Mathf.Max(1, level);
-        UpdateHUD();
-    }
+        if (anomalyManager == null)
+        {
+            Debug.LogWarning(
+                "PlayerHUD: AnomalyManager not found."
+            );
+            return;
+        }
 
-    public void AddScore(int points)
-    {
-        currentScore += Mathf.Max(0, points);
-        UpdateHUD();
-    }
+        int completedLevels =
+            anomalyManager.GetCompletedAnomalyCount();
 
-    public void SetScore(int score)
-    {
-        currentScore = Mathf.Max(0, score);
-        UpdateHUD();
-    }
+        int currentLevel = completedLevels + 1;
 
-    public void ResetHUD()
-    {
-        currentLevel = 1;
-        currentScore = 0;
-        UpdateHUD();
-    }
+        int currentScore =
+            completedLevels * pointsPerLevel;
 
-    private void UpdateHUD()
-    {
         if (levelText != null)
         {
             levelText.text = "Level: " + currentLevel;
