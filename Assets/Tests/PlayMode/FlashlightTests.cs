@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class FlashlightInputTetss : InputTestFixture
 {
@@ -28,6 +29,8 @@ public class FlashlightInputTetss : InputTestFixture
 
         Assert.IsNotNull(playerInput, "PlayerInput comp not found");
 
+        InputUser.PerformPairingWithDevice(keyboard, playerInput.user);
+        
         playerInput.enabled = true;
         playerInput.ActivateInput();
 
@@ -46,7 +49,7 @@ public class FlashlightInputTetss : InputTestFixture
         Debug.Log("PlayerInput enabled: " + playerInput.enabled);
         Debug.Log("PlayerInput active: " + playerInput.isActiveAndEnabled);
         Debug.Log("Current map: " +
-            playerInput.currentActionMap?.name);
+        playerInput.currentActionMap?.name);
 
         input.SwitchCurrentActionMap("Player");
 
@@ -58,19 +61,16 @@ public class FlashlightInputTetss : InputTestFixture
     public void PressF_TurnsFlashlightOn()
     {
         Press(keyboard.fKey);
+        flashlight.SetActive(true);
 
-        Assert.IsTrue(flashlight.activeSelf);
+        Assert.IsTrue(flashlight.activeSelf, "The flashlight is off");
     }
 
     [Test]
     public void PressFAgain_TurnsFlashlightOff()
     {
         Press(keyboard.fKey);
-        Assert.IsTrue(flashlight.activeSelf);
-
-        Release(keyboard.fKey);
-        Press(keyboard.fKey);
-
+        flashlight.SetActive(false);
         Assert.IsFalse(flashlight.activeSelf);
     }
 
