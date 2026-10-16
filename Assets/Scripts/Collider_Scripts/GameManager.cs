@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
 
     public void DoorSelected(DoorType selectedDoor)
     {
+       
         if (selectedDoor == DoorType.Left)
         {
             // Currently the successful door.
