@@ -1,7 +1,10 @@
 ﻿<Solution>
   <Project Path="AnomalyScripts.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="PlayMode.csproj" />
   <Project Path="Tests.csproj" />
+  <Project Path="ManagerScripts.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="EditMode.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Tests.csproj" />
 </Solution>
