@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Reflection;
@@ -75,8 +74,8 @@ public class DoorWinLossTests
         SetField(doorScript, "gameManager", gameManager);
 
         // Configure left doorway
-        object left = Enum.Parse(FindType("DoorType"), "Left");
-        SetField(doorScript, "doorType", left);
+        object anomaly = Enum.Parse(FindType("DoorType"), "Anomaly");
+        SetField(doorScript, "doorType", anomaly);
 
         // Create player outside doorway
         player = new GameObject("TestPlayer");

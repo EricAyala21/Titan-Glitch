@@ -1,9 +1,8 @@
-
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
-
+using UnityEditor;
 public class FlashlightInputTetss : InputTestFixture
 {
     private GameObject player;
@@ -18,9 +17,10 @@ public class FlashlightInputTetss : InputTestFixture
         keyboard = InputSystem.AddDevice<Keyboard>();
 
         // Load the configured player prefab.
-        var prefab = Resources.Load<GameObject>(
-            "Player"
-        );
+        GameObject prefab =
+            AssetDatabase.LoadAssetAtPath<GameObject>(
+                "Assets/Prefabs/Player.prefab"
+            );
 
         Assert.IsNotNull(prefab);
 

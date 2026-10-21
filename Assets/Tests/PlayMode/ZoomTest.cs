@@ -26,7 +26,7 @@ public class ZoomInputTests : InputTestFixture
         // Load player prefab
         GameObject prefab =
             AssetDatabase.LoadAssetAtPath<GameObject>(
-                "Assets/Player.prefab"
+                "Assets/Prefabs/Player.prefab"
             );
 
         Assert.IsNotNull(prefab, "Player prefab not found!");
