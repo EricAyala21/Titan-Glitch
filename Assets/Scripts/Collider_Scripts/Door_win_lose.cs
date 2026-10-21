@@ -16,5 +16,9 @@ public class Door_win_loss : MonoBehaviour
         {
             gameManager.DoorSelected(doorType);
         }
+        else
+        {
+            Debug.LogWarning("Door_win_loss: Triggered by non-player object.");
+        }
     }
 }

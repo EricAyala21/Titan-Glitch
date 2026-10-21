@@ -67,16 +67,16 @@ public class GameManager : MonoBehaviour
     public void DoorSelected(DoorType selectedDoor)
     {
        
-        if (selectedDoor == DoorType.Left)
+        if (selectedDoor == DoorType.Anomaly)
         {
             // Currently the successful door.
-            Debug.Log("Left Door Selected");
+            Debug.Log("Anomaly Door Selected");
             ChangeState(GameState.Progression);
         }
-        else if (selectedDoor == DoorType.Right)
+        else if (selectedDoor == DoorType.NoAnomaly)
         {
             // Currently the incorrect door.
-            Debug.Log("Right Door Selected");
+            Debug.Log("No Anomaly Door Selected");
             ChangeState(GameState.Failure);
         }
     }
