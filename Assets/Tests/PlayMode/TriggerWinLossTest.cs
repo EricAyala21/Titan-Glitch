@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections;
 using System.Reflection;
@@ -75,8 +74,8 @@ public class DoorWinLossTests
         SetField(doorScript, "gameManager", gameManager);
 
         // Configure left doorway
-        object left = Enum.Parse(FindType("DoorType"), "Left");
-        SetField(doorScript, "doorType", left);
+        object anomaly = Enum.Parse(FindType("DoorType"), "Anomaly");
+        SetField(doorScript, "doorType", anomaly);
 
         // Create player outside doorway
         player = new GameObject("TestPlayer");
@@ -104,7 +103,7 @@ public class DoorWinLossTests
     public IEnumerator LeftDoor_TriggersProgression()
     {
         // Expect logs from the real GameManager.
-        LogAssert.Expect(LogType.Log, "Left Door Selected");
+        LogAssert.Expect(LogType.Log, "Anomaly Door Selected");
 
         // No AnomalyManager is assigned in this test.
         LogAssert.Expect(

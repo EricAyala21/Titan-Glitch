@@ -6,7 +6,9 @@
         "UnityEditor.TestRunner",
         "ManagerScripts",
         "Unity.InputSystem",
-        "Unity.InputSystem.TestFramework"
+        "Unity.InputSystem.TestFramework",
+        "AnomalyScripts",
+        ""
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
