@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="41" result="Passed" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.107892">
+  <test-suite type="TestSuite" id="1057" name="Titan-Glitch-Game" fullname="Titan-Glitch-Game" runstate="Runnable" testcasecount="41" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.107892" total="41" passed="41" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1031" name="EditMode.dll" fullname="C:/Titan-Glitch/Library/ScriptAssemblies/EditMode.dll" runstate="Runnable" testcasecount="27" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.075326" total="27" passed="27" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="2064" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1001" name="AnomalyManagerTests" fullname="AnomalyManagerTests" classname="AnomalyManagerTests" runstate="Runnable" testcasecount="13" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.053092" total="13" passed="13" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1004" name="CompleteCurrentAnomaly_ThenSpawn_SelectsDifferentUnusedAnomaly" fullname="AnomalyManagerTests.CompleteCurrentAnomaly_ThenSpawn_SelectsDifferentUnusedAnomaly" methodname="CompleteCurrentAnomaly_ThenSpawn_SelectsDifferentUnusedAnomaly" classname="AnomalyManagerTests" runstate="Runnable" seed="2019094413" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.022884" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_2
+Completed anomaly index: 2
+New anomaly: AnomalyUnitTest_Prefab_1
+]]></output>
+        </test-case>
+        <test-case id="1005" name="CompleteCurrentAnomaly_WhenLastAnomaly_ReturnsTrue" fullname="AnomalyManagerTests.CompleteCurrentAnomaly_WhenLastAnomaly_ReturnsTrue" methodname="CompleteCurrentAnomaly_WhenLastAnomaly_ReturnsTrue" classname="AnomalyManagerTests" runstate="Runnable" seed="130328594" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001236" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_0
+Completed anomaly index: 0
+]]></output>
+        </test-case>
+        <test-case id="1008" name="CompleteCurrentAnomaly_WithoutActiveAnomaly_ReturnsFalse" fullname="AnomalyManagerTests.CompleteCurrentAnomaly_WithoutActiveAnomaly_ReturnsFalse" methodname="CompleteCurrentAnomaly_WithoutActiveAnomaly_ReturnsFalse" classname="AnomalyManagerTests" runstate="Runnable" seed="1953577266" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001375" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[No active anomaly to complete.
+]]></output>
+        </test-case>
+        <test-case id="1014" name="HasUnusedAnomalies_WithEmptyArray_ReturnsFalse" fullname="AnomalyManagerTests.HasUnusedAnomalies_WithEmptyArray_ReturnsFalse" methodname="HasUnusedAnomalies_WithEmptyArray_ReturnsFalse" classname="AnomalyManagerTests" runstate="Runnable" seed="1086605016" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000243" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1007" name="ResetRun_AfterCompletion_AllowsSameAnomalyAgain" fullname="AnomalyManagerTests.ResetRun_AfterCompletion_AllowsSameAnomalyAgain" methodname="ResetRun_AfterCompletion_AllowsSameAnomalyAgain" classname="AnomalyManagerTests" runstate="Runnable" seed="1296630671" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001430" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_0
+Completed anomaly index: 0
+New anomaly: AnomalyUnitTest_Prefab_0
+]]></output>
+        </test-case>
+        <test-case id="1006" name="SpawnAnomaly_AfterAllCompleted_DoesNotSpawnAgain" fullname="AnomalyManagerTests.SpawnAnomaly_AfterAllCompleted_DoesNotSpawnAgain" methodname="SpawnAnomaly_AfterAllCompleted_DoesNotSpawnAgain" classname="AnomalyManagerTests" runstate="Runnable" seed="2073584260" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.002007" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_0
+Completed anomaly index: 0
+All anomalies completed.
+]]></output>
+        </test-case>
+        <test-case id="1003" name="SpawnAnomaly_AfterFailedAttempt_RetriesSameAnomalyAndLocation" fullname="AnomalyManagerTests.SpawnAnomaly_AfterFailedAttempt_RetriesSameAnomalyAndLocation" methodname="SpawnAnomaly_AfterFailedAttempt_RetriesSameAnomalyAndLocation" classname="AnomalyManagerTests" runstate="Runnable" seed="152422621" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.003216" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_2
+Retrying anomaly: AnomalyUnitTest_Prefab_2
+]]></output>
+        </test-case>
+        <test-case id="1002" name="SpawnAnomaly_FirstLevel_SpawnsValidAnomaly" fullname="AnomalyManagerTests.SpawnAnomaly_FirstLevel_SpawnsValidAnomaly" methodname="SpawnAnomaly_FirstLevel_SpawnsValidAnomaly" classname="AnomalyManagerTests" runstate="Runnable" seed="563690935" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001825" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_2
+]]></output>
+        </test-case>
+        <test-case id="1012" name="SpawnAnomaly_IgnoresNullPrefabEntries" fullname="AnomalyManagerTests.SpawnAnomaly_IgnoresNullPrefabEntries" methodname="SpawnAnomaly_IgnoresNullPrefabEntries" classname="AnomalyManagerTests" runstate="Runnable" seed="1162631333" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000696" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_1
+]]></output>
+        </test-case>
+        <test-case id="1013" name="SpawnAnomaly_IgnoresNullSpawnPoints" fullname="AnomalyManagerTests.SpawnAnomaly_IgnoresNullSpawnPoints" methodname="SpawnAnomaly_IgnoresNullSpawnPoints" classname="AnomalyManagerTests" runstate="Runnable" seed="378126026" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000657" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[New anomaly: AnomalyUnitTest_Prefab_1
+]]></output>
+        </test-case>
+        <test-case id="1009" name="SpawnAnomaly_WithNoAnomalies_LogsErrorAndDoesNotSpawn" fullname="AnomalyManagerTests.SpawnAnomaly_WithNoAnomalies_LogsErrorAndDoesNotSpawn" methodname="SpawnAnomaly_WithNoAnomalies_LogsErrorAndDoesNotSpawn" classname="AnomalyManagerTests" runstate="Runnable" seed="2135231004" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000607" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Anomalies or spawn points are missing.
+]]></output>
+        </test-case>
+        <test-case id="1010" name="SpawnAnomaly_WithNoSpawnPoints_LogsErrorAndDoesNotSpawn" fullname="AnomalyManagerTests.SpawnAnomaly_WithNoSpawnPoints_LogsErrorAndDoesNotSpawn" methodname="SpawnAnomaly_WithNoSpawnPoints_LogsErrorAndDoesNotSpawn" classname="AnomalyManagerTests" runstate="Runnable" seed="344424099" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000613" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Anomalies or spawn points are missing.
+]]></output>
+        </test-case>
+        <test-case id="1011" name="SpawnAnomaly_WithOnlyNullSpawnPoints_LogsError" fullname="AnomalyManagerTests.SpawnAnomaly_WithOnlyNullSpawnPoints_LogsError" methodname="SpawnAnomaly_WithOnlyNullSpawnPoints_LogsError" classname="AnomalyManagerTests" runstate="Runnable" seed="381142076" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000625" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[No valid spawn points found.
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1015" name="GameManagerTests" fullname="GameManagerTests" classname="GameManagerTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.020557" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="ParameterizedMethod" id="1024" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.005997" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1017" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(MainMenu)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(MainMenu)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="1378923034" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001147" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1018" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(TutorialBaseline)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(TutorialBaseline)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="730676503" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000223" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1019" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(Exploring)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(Exploring)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="292650555" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000177" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1020" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(Decision)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(Decision)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="1327326701" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000174" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1021" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(Validation)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(Validation)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="1813120278" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000169" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1022" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(Feedback)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(Feedback)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="2136452834" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000166" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+          <test-case id="1023" name="ChangeState_NonSceneLoadingState_UpdatesCurrentState(Paused)" fullname="GameManagerTests.ChangeState_NonSceneLoadingState_UpdatesCurrentState(Paused)" methodname="ChangeState_NonSceneLoadingState_UpdatesCurrentState" classname="GameManagerTests" runstate="Runnable" seed="1054245570" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000179" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+          </test-case>
+        </test-suite>
+        <test-case id="1027" name="ChangeState_ProgressionWithMissingAnomalyManager_LogsError" fullname="GameManagerTests.ChangeState_ProgressionWithMissingAnomalyManager_LogsError" methodname="ChangeState_ProgressionWithMissingAnomalyManager_LogsError" classname="GameManagerTests" runstate="Runnable" seed="94256090" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000874" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[AnomalyManager reference is missing!
+]]></output>
+        </test-case>
+        <test-case id="1025" name="ChangeState_Twice_StoresLatestState" fullname="GameManagerTests.ChangeState_Twice_StoresLatestState" methodname="ChangeState_Twice_StoresLatestState" classname="GameManagerTests" runstate="Runnable" seed="903283411" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000274" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1026" name="ChangeState_Victory_LogsWinAndSetsVictory" fullname="GameManagerTests.ChangeState_Victory_LogsWinAndSetsVictory" methodname="ChangeState_Victory_LogsWinAndSetsVictory" classname="GameManagerTests" runstate="Runnable" seed="1626245772" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000665" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[You Win!
+]]></output>
+        </test-case>
+        <test-case id="1028" name="DoorSelected_LeftWithMissingAnomalyManager_RequestsProgression" fullname="GameManagerTests.DoorSelected_LeftWithMissingAnomalyManager_RequestsProgression" methodname="DoorSelected_LeftWithMissingAnomalyManager_RequestsProgression" classname="GameManagerTests" runstate="Runnable" seed="542162741" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000915" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Left Door Selected
+AnomalyManager reference is missing!
+]]></output>
+        </test-case>
+        <test-case id="1029" name="DoorSelected_UnknownDoor_LeavesStateUnchanged" fullname="GameManagerTests.DoorSelected_UnknownDoor_LeavesStateUnchanged" methodname="DoorSelected_UnknownDoor_LeavesStateUnchanged" classname="GameManagerTests" runstate="Runnable" seed="748585364" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000224" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1016" name="InitialState_IsMainMenu" fullname="GameManagerTests.InitialState_IsMainMenu" methodname="InitialState_IsMainMenu" classname="GameManagerTests" runstate="Runnable" seed="1707123229" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000207" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1030" name="Progression_OnLastAnomaly_TransitionsToVictory" fullname="GameManagerTests.Progression_OnLastAnomaly_TransitionsToVictory" methodname="Progression_OnLastAnomaly_TransitionsToVictory" classname="GameManagerTests" runstate="Runnable" seed="477053937" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001463" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Completed anomaly index: 0
+You Win!
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1048" name="Tests.dll" fullname="C:/Titan-Glitch/Library/ScriptAssemblies/Tests.dll" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.023043" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="2064" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestFixture" id="1032" name="AnomalyBaseTest" fullname="AnomalyBaseTest" classname="AnomalyBaseTest" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.007014" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1033" name="ActivateAnomalySetsActive" fullname="AnomalyBaseTest.ActivateAnomalySetsActive" methodname="ActivateAnomalySetsActive" classname="AnomalyBaseTest" runstate="Runnable" seed="1575628667" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001423" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1036" name="ActivateAnomalyTwiceRemainsActive" fullname="AnomalyBaseTest.ActivateAnomalyTwiceRemainsActive" methodname="ActivateAnomalyTwiceRemainsActive" classname="AnomalyBaseTest" runstate="Runnable" seed="1947941104" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000245" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1035" name="AnomalyStartsInactive" fullname="AnomalyBaseTest.AnomalyStartsInactive" methodname="AnomalyStartsInactive" classname="AnomalyBaseTest" runstate="Runnable" seed="804168473" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000209" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1039" name="MultipleActivationResetCycles" fullname="AnomalyBaseTest.MultipleActivationResetCycles" methodname="MultipleActivationResetCycles" classname="AnomalyBaseTest" runstate="Runnable" seed="55646541" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000243" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1034" name="ResetAnomalySetsInactive" fullname="AnomalyBaseTest.ResetAnomalySetsInactive" methodname="ResetAnomalySetsInactive" classname="AnomalyBaseTest" runstate="Runnable" seed="1623114671" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000220" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1037" name="ResetAnomalyTwiceRemainsInactive" fullname="AnomalyBaseTest.ResetAnomalyTwiceRemainsInactive" methodname="ResetAnomalyTwiceRemainsInactive" classname="AnomalyBaseTest" runstate="Runnable" seed="918463774" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000193" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1038" name="ResetBeforeActivationRemainsInactive" fullname="AnomalyBaseTest.ResetBeforeActivationRemainsInactive" methodname="ResetBeforeActivationRemainsInactive" classname="AnomalyBaseTest" runstate="Runnable" seed="1882027883" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000185" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1040" name="TwoAnomaliesOperateIndependently" fullname="AnomalyBaseTest.TwoAnomaliesOperateIndependently" methodname="TwoAnomaliesOperateIndependently" classname="AnomalyBaseTest" runstate="Runnable" seed="745659102" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000366" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1041" name="MissingObjectAnomalyTests" fullname="MissingObjectAnomalyTests" classname="MissingObjectAnomalyTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.009920" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1042" name="ActivateAnomaly_HidesTargetObject" fullname="MissingObjectAnomalyTests.ActivateAnomaly_HidesTargetObject" methodname="ActivateAnomaly_HidesTargetObject" classname="MissingObjectAnomalyTests" runstate="Runnable" seed="1585275776" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.001125" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1046" name="ActivateTwice_TargetObjectStaysHidden" fullname="MissingObjectAnomalyTests.ActivateTwice_TargetObjectStaysHidden" methodname="ActivateTwice_TargetObjectStaysHidden" classname="MissingObjectAnomalyTests" runstate="Runnable" seed="1700072585" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000279" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1045" name="InitialState_StartResetsAnomalyToNormal" fullname="MissingObjectAnomalyTests.InitialState_StartResetsAnomalyToNormal" methodname="InitialState_StartResetsAnomalyToNormal" classname="MissingObjectAnomalyTests" runstate="Runnable" seed="67389406" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000486" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1043" name="ResetAnomaly_ShowsTargetObject" fullname="MissingObjectAnomalyTests.ResetAnomaly_ShowsTargetObject" methodname="ResetAnomaly_ShowsTargetObject" classname="MissingObjectAnomalyTests" runstate="Runnable" seed="982623959" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000236" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1047" name="ResetWhileInactive_TargetObjectStaysVisible" fullname="MissingObjectAnomalyTests.ResetWhileInactive_TargetObjectStaysVisible" methodname="ResetWhileInactive_TargetObjectStaysVisible" classname="MissingObjectAnomalyTests" runstate="Runnable" seed="197358458" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000215" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1044" name="Toggle_SwitchesState" fullname="MissingObjectAnomalyTests.Toggle_SwitchesState" methodname="Toggle_SwitchesState" classname="MissingObjectAnomalyTests" runstate="Runnable" seed="54932897" result="Passed" start-time="2026-10-16 00:36:01Z" end-time="2026-10-16 00:36:01Z" duration="0.000396" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: C:/Users/rvrod/AppData/LocalLow/DefaultCompany/Titan-Glitch-Game\TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

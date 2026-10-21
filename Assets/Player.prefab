@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 1602392619173188875}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -457,4 +457,5 @@ MonoBehaviour:
   defaultFOV: 60
   zoomFOV: 30
   zoomSpeed: 10
+  gameManager: {fileID: 0}
   flashlight: {fileID: 6687419012552083648}

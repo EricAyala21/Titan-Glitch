@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="9" result="Passed" total="9" passed="8" failed="0" inconclusive="0" skipped="1" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.0881701">
+  <test-suite type="TestSuite" id="1074" name="Titan-Glitch-Game" fullname="Titan-Glitch-Game" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.088170" total="9" passed="8" failed="0" inconclusive="0" skipped="1" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1085" name="PlayMode.dll" fullname="C:/Titan-Glitch/Library/ScriptAssemblies/PlayMode.dll" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.083330" total="9" passed="8" failed="0" inconclusive="0" skipped="1" asserts="0">
+      <properties>
+        <property name="_PID" value="2064" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestFixture" id="1075" name="UIManagerFunctionalTests" fullname="UIManagerFunctionalTests" classname="UIManagerFunctionalTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.080443" total="9" passed="8" failed="0" inconclusive="0" skipped="1" asserts="0">
+        <properties />
+        <test-case id="1084" name="MainMenuButton_LoadsMainMenuScene" fullname="UIManagerFunctionalTests.MainMenuButton_LoadsMainMenuScene" methodname="MainMenuButton_LoadsMainMenuScene" classname="UIManagerFunctionalTests" runstate="Explicit" seed="296122123" result="Skipped" label="Explicit" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.000655" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="_SKIPREASON" value="Run separately with Main-Menu in the build scene list; this changes scenes." />
+            <property name="Category" value="SceneIntegration" />
+          </properties>
+          <reason>
+            <message><![CDATA[Run separately with Main-Menu in the build scene list; this changes scenes.]]></message>
+          </reason>
+        </test-case>
+        <test-case id="1083" name="QuitButton_InEditor_LogsQuitMessage" fullname="UIManagerFunctionalTests.QuitButton_InEditor_LogsQuitMessage" methodname="QuitButton_InEditor_LogsQuitMessage" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1077127590" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.010611" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Quit!
+]]></output>
+        </test-case>
+        <test-case id="1082" name="TogglePause_DoesNotDestroyPauseMenu" fullname="UIManagerFunctionalTests.TogglePause_DoesNotDestroyPauseMenu" methodname="TogglePause_DoesNotDestroyPauseMenu" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1551852546" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.010508" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1076" name="TogglePause_FirstCall_ShowsPauseMenu" fullname="UIManagerFunctionalTests.TogglePause_FirstCall_ShowsPauseMenu" methodname="TogglePause_FirstCall_ShowsPauseMenu" classname="UIManagerFunctionalTests" runstate="Runnable" seed="996066097" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.010258" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1077" name="TogglePause_FirstCall_StopsGameTime" fullname="UIManagerFunctionalTests.TogglePause_FirstCall_StopsGameTime" methodname="TogglePause_FirstCall_StopsGameTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="54726936" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.010016" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1081" name="TogglePause_FourCalls_ReturnsToRunningState" fullname="UIManagerFunctionalTests.TogglePause_FourCalls_ReturnsToRunningState" methodname="TogglePause_FourCalls_ReturnsToRunningState" classname="UIManagerFunctionalTests" runstate="Runnable" seed="2139346263" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.009160" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1078" name="TogglePause_SecondCall_HidesPauseMenu" fullname="UIManagerFunctionalTests.TogglePause_SecondCall_HidesPauseMenu" methodname="TogglePause_SecondCall_HidesPauseMenu" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1052195815" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.009149" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1079" name="TogglePause_SecondCall_ResumesGameTime" fullname="UIManagerFunctionalTests.TogglePause_SecondCall_ResumesGameTime" methodname="TogglePause_SecondCall_ResumesGameTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="772829395" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.008179" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1080" name="TogglePause_ThreeCalls_PausesAgain" fullname="UIManagerFunctionalTests.TogglePause_ThreeCalls_PausesAgain" methodname="TogglePause_ThreeCalls_PausesAgain" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1663488764" result="Passed" start-time="2026-10-16 00:36:10Z" end-time="2026-10-16 00:36:10Z" duration="0.007892" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: C:/Users/rvrod/AppData/LocalLow/DefaultCompany/Titan-Glitch-Game\TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

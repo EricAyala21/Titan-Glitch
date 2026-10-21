@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     //Stores a reference of the character controller component
     private CharacterController controller;
-
+    public  GameManager gameManager;
     //Initializing private variables of the player move and look Input
     private Vector2 moveInput;
     private Vector2 lookInput;
@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
     {
         // Find character controller attached to the gameObject
         controller = GetComponent<CharacterController>();
-
         Cursor.lockState = CursorLockMode.Locked;
 
 
@@ -163,6 +162,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, defaultFOV, Time.deltaTime * zoomSpeed);
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Ouch! Hit an enemy named: " + other.gameObject.name);
+            gameManager.ChangeState(GameManager.GameState.Failure);
         }
     }
 }
