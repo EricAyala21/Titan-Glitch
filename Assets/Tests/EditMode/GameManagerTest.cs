@@ -76,9 +76,9 @@ public class GameManagerTests
     [Test]
     public void DoorSelected_LeftWithMissingAnomalyManager_RequestsProgression()
     {
-        LogAssert.Expect(LogType.Log, "Left Door Selected");
+        LogAssert.Expect(LogType.Log, "Anomaly Door Selected");
         LogAssert.Expect(LogType.Error, "AnomalyManager reference is missing!");
-        gameManager.DoorSelected(DoorType.Left);
+        gameManager.DoorSelected(DoorType.Anomaly);
         Assert.AreEqual(GameManager.GameState.Progression, gameManager.CurrentState);
     }
 
