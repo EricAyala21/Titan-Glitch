@@ -9,12 +9,7 @@ public class GameManager : MonoBehaviour
 
     public enum GameState
     {
-        MainMenu,
-        TutorialBaseline,
         Exploring,
-        Decision,
-        Validation,
-        Feedback,
         Progression,
         Failure,
         Victory,
@@ -29,24 +24,9 @@ public class GameManager : MonoBehaviour
 
         switch (newState)
         {
-            case GameState.MainMenu:
-                break;
-
-            case GameState.TutorialBaseline:
-                break;
 
             case GameState.Exploring:
                 break;
-
-            case GameState.Decision:
-                break;
-
-            case GameState.Validation:
-                break;
-
-            case GameState.Feedback:
-                break;
-
             case GameState.Progression:
                 EnterProgression();
                 break;
@@ -134,7 +114,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("You Win!");
 
-        // TODO: Display victory UI or load victory scene.
+      
     }
 
     // Use this when the player starts a completely new game.
