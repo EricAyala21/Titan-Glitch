@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour
         //Read Vector2 value from move action
         // W = (0,1) , S = (0,-1) , A = (-1,0) , D = (1,0)
         moveInput = value.Get<Vector2>();
+
+       // Debug.Log("Move Input: " + moveInput);
     }
 
     public void OnLook(InputValue value)
@@ -127,6 +129,8 @@ public class PlayerController : MonoBehaviour
 
         //Apply vertical movement
         controller.Move(velocity * Time.deltaTime);
+
+
     }
 
     void HandleCamera()
