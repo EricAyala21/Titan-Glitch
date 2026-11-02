@@ -67,4 +67,31 @@ public class SystemResourceMonitor : MonoBehaviour
 
         return healthy;
     }
+
+private void OnGUI()
+{
+    GUIStyle style = new GUIStyle(GUI.skin.box);
+
+    style.fontSize = 22;
+    style.normal.textColor =
+        CurrentFPS < minimumFPS ? Color.red : Color.green;
+
+    style.alignment = TextAnchor.MiddleCenter;
+
+    float boxWidth = 150f;
+    float boxHeight = 40f;
+    float margin = 10f;
+
+    GUI.Box(
+        new Rect(
+            Screen.width - boxWidth - margin,
+            Screen.height - boxHeight - margin,
+            boxWidth,
+            boxHeight
+        ),
+        "FPS: " + CurrentFPS.ToString("F1"),
+        style
+    );
+}
+
 }
