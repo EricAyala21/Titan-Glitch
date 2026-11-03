@@ -1,0 +1,16 @@
+---
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+  - package-ecosystem: "GameCI"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "Unity Test Runner"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      
