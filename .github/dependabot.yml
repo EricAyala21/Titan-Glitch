@@ -1,16 +1,24 @@
 ---
 version: 2
+
+
 updates:
+  #Monitor Github Actions Dependencies
   - package-ecosystem: "github-actions"
-  directory: "/"
-  schedule:
+    directory: "/"
+
+  - schedule:
     interval: "weekly"
-  - package-ecosystem: "GameCI"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "Unity Test Runner"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+    day: "wednesday"
+    time: "09:00"
+    timezone: "America/Los_Angeles"
+
+commit-message:
+  prefix: "Dependabot"
+
+  groups:
+    - github-actions:
+        patterns:
+        - "*"
+
       
