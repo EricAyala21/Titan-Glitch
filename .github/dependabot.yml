@@ -1,24 +1,20 @@
----
+
 version: 2
 
-
 updates:
-  #Monitor Github Actions Dependencies
   - package-ecosystem: "github-actions"
     directory: "/"
 
-  - schedule:
-    interval: "weekly"
-    day: "wednesday"
-    time: "09:00"
-    timezone: "America/Los_Angeles"
+    schedule:
+      interval: "weekly"
+      day: "wednesday"
 
-commit-message:
-  prefix: "Dependabot"
+    open-pull-requests-limit: 5
 
-  groups:
-    - github-actions:
+    commit-message:
+      prefix: "deps"
+
+    groups:
+      github-actions:
         patterns:
-        - "*"
-
-      
+          - "*"
