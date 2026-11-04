@@ -1,16 +1,15 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+// Test-only anomaly for SOC 2 runtime monitoring.
+public class SOC2TestAnomaly : AnomalyBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void ActivateAnomaly()
     {
-        
+        anomalyActive = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ResetAnomaly()
     {
-        
+        anomalyActive = false;
     }
 }
