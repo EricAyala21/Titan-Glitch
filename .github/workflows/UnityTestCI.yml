@@ -1,3 +1,4 @@
+
 name: UnityTestCI
 
 on:
@@ -18,12 +19,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           lfs: true
 
       - name: Cache Library folder
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: Library
           key: Library-StandaloneWindows64-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -42,7 +43,7 @@ jobs:
           echo "Git Commit: $COMMIT_SHA"
 
       - name: Build Unity project
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v6
         env:
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -54,25 +55,70 @@ jobs:
           version: ${{ env.BUILD_VERSION }}
           dockerMemoryLimit: 15500m
 
+      # NEW: Package build and generate SHA-256
+      - name: Generate Build SHA-256 Checksum
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Confirm the build exists and contains files
+          test -d build/StandaloneWindows64
+          test -n "$(find build/StandaloneWindows64 -type f -print -quit)"
+
+          # Package the completed Windows build
+          (
+            cd build/StandaloneWindows64
+            zip -qr "$GITHUB_WORKSPACE/TitanGlitchBuild.zip" .
+          )
+
+          # Calculate the original build checksum
+          sha256sum TitanGlitchBuild.zip > TitanGlitchBuild.zip.sha256
+
+          # Display evidence in the workflow logs
+          echo "Build Version: $BUILD_VERSION"
+          echo "Git Commit: $GITHUB_SHA"
+          cat TitanGlitchBuild.zip.sha256
+
+          # Record evidence in GitHub Actions summary
+          echo "### Titan Glitch Build Integrity" >> "$GITHUB_STEP_SUMMARY"
+          echo "Build Version: $BUILD_VERSION" >> "$GITHUB_STEP_SUMMARY"
+          echo "Git Commit: $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo '```text' >> "$GITHUB_STEP_SUMMARY"
+          cat TitanGlitchBuild.zip.sha256 >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+      # UPDATED: Upload the ZIP and checksum together
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        id: upload_build
+        uses: actions/upload-artifact@v7
         with:
           name: TitanGlitch-StandaloneWindows64-v${{ env.BUILD_VERSION }}
-          path: build/StandaloneWindows64
+          path: |
+            TitanGlitchBuild.zip
+            TitanGlitchBuild.zip.sha256
+          if-no-files-found: error
           retention-days: 14
+
+      # NEW: Record GitHub's own artifact digest
+      - name: Record artifact digest
+        run: |
+          echo "Artifact digest: ${{ steps.upload_build.outputs.artifact-digest }}"
+          echo "Artifact digest: ${{ steps.upload_build.outputs.artifact-digest }}" >> "$GITHUB_STEP_SUMMARY"
 
   test:
     name: Run Unity EditMode Tests
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      checks: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           lfs: true
 
       - name: Cache Unity Library
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: Library
           key: Library-EditMode-${{ runner.os }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -93,7 +139,7 @@ jobs:
 
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Unity-EditMode-Test-Results
           path: test-results

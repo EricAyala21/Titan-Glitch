@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Door_win_loss DoorSide;
     [SerializeField] private AnomalyManager anomalyManager;
+    public event System.Action<GameState> OnStateChanged;
 
     public enum GameState
     {
@@ -22,11 +23,14 @@ public class GameManager : MonoBehaviour
     {
         CurrentState = newState;
 
+        // Notify UIManager that the state changed.
+        OnStateChanged?.Invoke(newState);
+
         switch (newState)
         {
-
             case GameState.Exploring:
                 break;
+
             case GameState.Progression:
                 EnterProgression();
                 break;
@@ -65,13 +69,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Level Failed - Retrying Same Anomaly");
 
-        // Do NOT mark the anomaly completed.
-        // AnomalyManager remembers which one was active.
-        CurrentState = GameState.Exploring;
-
-        SceneManager.LoadScene(
-            SceneManager.GetActiveScene().buildIndex
-        );
     }
 
     private void EnterProgression()
@@ -103,6 +100,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Level Passed - Loading Next Anomaly");
 
+        
         CurrentState = GameState.Exploring;
 
         SceneManager.LoadScene(
@@ -112,6 +110,7 @@ public class GameManager : MonoBehaviour
 
     private void EnterVictory()
     {
+        
         Debug.Log("You Win!");
 
       
@@ -120,8 +119,23 @@ public class GameManager : MonoBehaviour
     // Use this when the player starts a completely new game.
     public void StartNewGame()
     {
+        Time.timeScale = 1f;
         AnomalyManager.ResetRun();
 
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex
+        );
+    }
+
+
+    public void RetryLevel()
+    {
+        if (CurrentState != GameState.Failure)
+            return;
+
+        Time.timeScale = 1f;
+
+        // Reload without completing the current anomaly.
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().buildIndex
         );
