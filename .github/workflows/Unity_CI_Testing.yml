@@ -19,13 +19,13 @@ jobs:
     steps:
       # Download project from GitHub
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           lfs: true
 
       # Cache Unity Library to speed up future builds
       - name: Cache Unity Library
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: Library
           key: Library-StandaloneWindows64-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -74,7 +74,7 @@ jobs:
 
       # Build the Unity project
       - name: Build Unity Project
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v6
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -94,7 +94,7 @@ jobs:
       # Upload diagnostic logs even if build fails
       - name: Upload Unity Diagnostic Logs
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Unity-Diagnostics
           path: ${{ github.workspace }}/Logs/UnityDiagnostics/
@@ -124,7 +124,7 @@ jobs:
       # Upload completed Windows build
       - name: Upload Build Artifact
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: TitanGlitch-StandaloneWindows64-v${{ env.BUILD_VERSION }}
           path: build/StandaloneWindows64
@@ -136,7 +136,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           lfs: true
 
@@ -152,7 +152,7 @@ jobs:
 
       - name: Upload Test Results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Unity-EditMode-Test-Results
           path: test-results
