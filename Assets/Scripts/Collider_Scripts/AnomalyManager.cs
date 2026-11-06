@@ -39,12 +39,14 @@ public class AnomalyManager : MonoBehaviour
         }
 
         // Check if the previous anomaly is valid for a retry.
+        // Is there a previous anomaly that exists, is still valid, and has not already been completed?
         bool retryPrevious =
             activeAnomalyIndex >= 0 &&
             activeAnomalyIndex < anomalies.Length &&
             anomalies[activeAnomalyIndex] != null &&
             !completedAnomalies.Contains(activeAnomalyIndex);
 
+        // find a new anomaly to use.
         if (!retryPrevious)
         {
             List<int> availableAnomalies = new List<int>();
