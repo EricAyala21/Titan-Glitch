@@ -4,304 +4,351 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
+// EditMode: requires the test assembly to reference the AnomalyManager runtime assembly.
+// These tests intentionally invoke spawning through reflection because MonoBehaviour.Start
+// does not run automatically in EditMode tests.
+[Category("GameplayRegression")]
 public class AnomalyManagerTests
 {
-    private readonly List<GameObject> testObjects = new List<GameObject>();
-    private readonly List<GameObject> spawnedClones = new List<GameObject>();
+    private const string Prefix = "TGCoverage_Anomaly_";
+    private static readonly MethodInfo SpawnMethod = typeof(AnomalyManager).GetMethod(
+        "SpawnAnomaly", BindingFlags.NonPublic | BindingFlags.Instance);
+
+    private readonly List<GameObject> owned = new List<GameObject>();
+    private readonly List<GameObject> clones = new List<GameObject>();
     private GameObject[] prefabs;
     private Transform[] spawnPoints;
-
-    private static readonly MethodInfo SpawnMethod = typeof(AnomalyManager).GetMethod(
-        "SpawnAnomaly", BindingFlags.Instance | BindingFlags.NonPublic);
 
     [SetUp]
     public void SetUp()
     {
         AnomalyManager.ResetRun();
-        prefabs = CreatePrefabs(3);
-        spawnPoints = CreateSpawnPoints(2);
-        Assert.IsNotNull(SpawnMethod,
-            "Expected a private SpawnAnomaly() method on AnomalyManager.");
+        Assert.IsNotNull(SpawnMethod, "AnomalyManager.SpawnAnomaly method not found.");
+        prefabs = MakePrefabs(3);
+        spawnPoints = MakeSpawnPoints(2);
     }
+
     [TearDown]
     public void TearDown()
     {
-        // Destroy the objects created by Instantiate() before their source prefabs.
-        foreach (GameObject clone in spawnedClones)
-        {
-            if (clone != null)
-                Object.DestroyImmediate(clone);
-        }
-
-        foreach (GameObject obj in testObjects)
-        {
-            if (obj != null)
+        foreach (GameObject clone in clones)
+            if (clone != null) Object.DestroyImmediate(clone);
+        // Also remove untracked clones if a negative duplicate-spawn test was run.
+        foreach (GameObject obj in Object.FindObjectsByType<GameObject>())
+            if (obj != null && obj.name.StartsWith(Prefix) && obj.name.EndsWith("(Clone)"))
                 Object.DestroyImmediate(obj);
-        }
-
-        spawnedClones.Clear();
-        testObjects.Clear();
+        foreach (GameObject obj in owned)
+            if (obj != null) Object.DestroyImmediate(obj);
+        clones.Clear();
+        owned.Clear();
         AnomalyManager.ResetRun();
     }
 
     [Test]
-    public void SpawnAnomaly_FirstLevel_SpawnsValidAnomaly()
+    public void NewRun_HasZeroCompletedAnomaliesAndUnusedOptions()
     {
         AnomalyManager manager = CreateManager();
-
-        GameObject clone = SpawnAndFindClone(manager);
-
-        Assert.IsNotNull(clone, "An anomaly instance should be created.");
-        Assert.That(manager.CurrentAnomalyIndex,
-            Is.InRange(0, prefabs.Length - 1));
+        Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
         Assert.AreEqual(0, manager.GetCompletedAnomalyCount());
         Assert.IsTrue(manager.HasUnusedAnomalies());
-        Assert.IsTrue(IsAtValidSpawnPoint(clone.transform.position));
     }
+
     [Test]
-    public void SpawnAnomaly_AfterFailedAttempt_RetriesSameAnomalyAndLocation()
+    public void Spawn_ChoosesValidAnomalyAndAllowedSpawnLocation()
     {
-        AnomalyManager firstManager = CreateManager();
-        GameObject firstClone = SpawnAndFindClone(firstManager);
-        Assert.IsNotNull(firstClone);
+        AnomalyManager manager = CreateManager();
+        GameObject clone = Spawn(manager);
+        Assert.IsNotNull(clone);
+        Assert.That(manager.CurrentAnomalyIndex, Is.InRange(0, 2));
+        Assert.IsTrue(AtValidSpawn(clone.transform.position));
+        Assert.AreEqual(0, manager.GetCompletedAnomalyCount());
+    }
 
-        int originalIndex = firstManager.CurrentAnomalyIndex;
-        Vector3 originalPosition = firstClone.transform.position;
+    [Test]
+    public void FailureReload_RetainsAnomalyAndLocationWithoutCompletingIt()
+    {
+        AnomalyManager first = CreateManager();
+        GameObject firstClone = Spawn(first);
+        int selected = first.CurrentAnomalyIndex;
+        Vector3 position = firstClone.transform.position;
+        Unload(first, firstClone);
 
-        // Simulate the old scene being unloaded without completing the anomaly.
-        Object.DestroyImmediate(firstClone);
-        Object.DestroyImmediate(firstManager.gameObject);
-
-        AnomalyManager reloadedManager = CreateManager();
-        GameObject retryClone = SpawnAndFindClone(reloadedManager);
-
+        AnomalyManager retry = CreateManager();
+        GameObject retryClone = Spawn(retry);
         Assert.IsNotNull(retryClone);
-        Assert.AreEqual(originalIndex, reloadedManager.CurrentAnomalyIndex);
-        Assert.AreEqual(originalPosition, retryClone.transform.position);
-        Assert.AreEqual(0, reloadedManager.GetCompletedAnomalyCount());
+        Assert.AreEqual(selected, retry.CurrentAnomalyIndex);
+        Assert.AreEqual(position, retryClone.transform.position);
+        Assert.AreEqual(0, retry.GetCompletedAnomalyCount());
     }
 
     [Test]
-    public void CompleteCurrentAnomaly_ThenSpawn_SelectsDifferentUnusedAnomaly()
+    public void SuccessfulProgression_ExcludesPreviouslyCompletedAnomaly()
     {
-        AnomalyManager firstManager = CreateManager();
-        GameObject firstClone = SpawnAndFindClone(firstManager);
-        Assert.IsNotNull(firstClone);
-        int firstIndex = firstManager.CurrentAnomalyIndex;
+        AnomalyManager first = CreateManager();
+        GameObject clone = Spawn(first);
+        int original = first.CurrentAnomalyIndex;
+        Assert.IsFalse(first.CompleteCurrentAnomaly());
+        Assert.AreEqual(-1, first.CurrentAnomalyIndex);
+        Assert.AreEqual(1, first.GetCompletedAnomalyCount());
+        Unload(first, clone);
 
-        bool allCompleted = firstManager.CompleteCurrentAnomaly();
-        Assert.IsFalse(allCompleted, "Two unused anomalies should still remain.");
-        Assert.AreEqual(1, firstManager.GetCompletedAnomalyCount());
-
-        // Simulate a successful level transition and scene reload.
-        Object.DestroyImmediate(firstClone);
-        Object.DestroyImmediate(firstManager.gameObject);
-
-        AnomalyManager nextManager = CreateManager();
-        GameObject nextClone = SpawnAndFindClone(nextManager);
-
-        Assert.IsNotNull(nextClone);
-        Assert.AreNotEqual(firstIndex, nextManager.CurrentAnomalyIndex,
-            "A completed anomaly must not be selected again.");
+        AnomalyManager second = CreateManager();
+        Assert.IsNotNull(Spawn(second));
+        Assert.AreNotEqual(original, second.CurrentAnomalyIndex);
     }
 
     [Test]
-    public void CompleteCurrentAnomaly_WhenLastAnomaly_ReturnsTrue()
+    public void FullRun_EachValidAnomalyOccursExactlyOnceAndLastCompletesGame()
     {
-        // Only one valid anomaly is available in this run.
+        HashSet<int> visited = new HashSet<int>();
+        for (int i = 0; i < 3; i++)
+        {
+            AnomalyManager manager = CreateManager();
+            GameObject clone = Spawn(manager);
+            Assert.IsNotNull(clone);
+            Assert.IsTrue(visited.Add(manager.CurrentAnomalyIndex),
+                "A completed anomaly was reused during a successful run.");
+            bool done = manager.CompleteCurrentAnomaly();
+            Assert.AreEqual(i == 2, done, "Only the final completion should end the run.");
+            Assert.AreEqual(i + 1, manager.GetCompletedAnomalyCount());
+            Unload(manager, clone);
+        }
+        Assert.AreEqual(3, visited.Count);
+        AnomalyManager afterCompletion = CreateManager();
+        Assert.IsFalse(afterCompletion.HasUnusedAnomalies());
+        LogAssert.Expect(LogType.Log, "All anomalies completed.");
+        Assert.IsNull(Spawn(afterCompletion));
+    }
+
+    [Test]
+    public void CompletingSingleRemainingAnomaly_ReturnsTrue()
+    {
         prefabs = new[] { prefabs[0] };
         AnomalyManager manager = CreateManager();
-        Assert.IsNotNull(SpawnAndFindClone(manager));
-
-        bool allCompleted = manager.CompleteCurrentAnomaly();
-
-        Assert.IsTrue(allCompleted);
-        Assert.AreEqual(1, manager.GetCompletedAnomalyCount());
-        Assert.IsFalse(manager.HasUnusedAnomalies());
+        Assert.IsNotNull(Spawn(manager));
+        Assert.IsTrue(manager.CompleteCurrentAnomaly());
         Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
+        Assert.IsFalse(manager.HasUnusedAnomalies());
     }
 
     [Test]
-    public void SpawnAnomaly_AfterAllCompleted_DoesNotSpawnAgain()
-    {
-        prefabs = new[] { prefabs[0] };
-        AnomalyManager firstManager = CreateManager();
-        GameObject firstClone = SpawnAndFindClone(firstManager);
-        Assert.IsNotNull(firstClone);
-        Assert.IsTrue(firstManager.CompleteCurrentAnomaly());
-
-        Object.DestroyImmediate(firstClone);
-        Object.DestroyImmediate(firstManager.gameObject);
-
-        AnomalyManager nextManager = CreateManager();
-        LogAssert.Expect(LogType.Log, "All anomalies completed.");
-        GameObject nextClone = SpawnAndFindClone(nextManager);
-
-        Assert.IsNull(nextClone);
-        Assert.AreEqual(-1, nextManager.CurrentAnomalyIndex);
-    }
-    [Test]
-    public void ResetRun_AfterCompletion_AllowsSameAnomalyAgain()
-    {
-        prefabs = new[] { prefabs[0] };
-        AnomalyManager firstManager = CreateManager();
-        GameObject firstClone = SpawnAndFindClone(firstManager);
-        Assert.IsNotNull(firstClone);
-        Assert.IsTrue(firstManager.CompleteCurrentAnomaly());
-
-        Object.DestroyImmediate(firstClone);
-        Object.DestroyImmediate(firstManager.gameObject);
-        AnomalyManager.ResetRun();
-
-        AnomalyManager newRunManager = CreateManager();
-        GameObject newClone = SpawnAndFindClone(newRunManager);
-
-        Assert.IsNotNull(newClone);
-        Assert.AreEqual(0, newRunManager.CurrentAnomalyIndex);
-        Assert.AreEqual(0, newRunManager.GetCompletedAnomalyCount());
-    }
-
-    [Test]
-    public void CompleteCurrentAnomaly_WithoutActiveAnomaly_ReturnsFalse()
+    public void CompletingWithoutSpawn_LogsErrorAndDoesNotAdvance()
     {
         AnomalyManager manager = CreateManager();
         LogAssert.Expect(LogType.Error, "No active anomaly to complete.");
-
-        bool result = manager.CompleteCurrentAnomaly();
-
-        Assert.IsFalse(result);
+        Assert.IsFalse(manager.CompleteCurrentAnomaly());
         Assert.AreEqual(0, manager.GetCompletedAnomalyCount());
     }
 
     [Test]
-    public void SpawnAnomaly_WithNoAnomalies_LogsErrorAndDoesNotSpawn()
+    public void DoubleCompletion_IsRejectedInsteadOfIncreasingProgress()
     {
-        prefabs = new GameObject[0];
         AnomalyManager manager = CreateManager();
-        LogAssert.Expect(LogType.Error,
-            "Anomalies or spawn points are missing.");
-
-        Assert.IsNull(SpawnAndFindClone(manager));
-        Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
-    }
-    [Test]
-    public void SpawnAnomaly_WithNoSpawnPoints_LogsErrorAndDoesNotSpawn()
-    {
-        spawnPoints = new Transform[0];
-        AnomalyManager manager = CreateManager();
-        LogAssert.Expect(LogType.Error,
-            "Anomalies or spawn points are missing.");
-
-        Assert.IsNull(SpawnAndFindClone(manager));
-        Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
+        Assert.IsNotNull(Spawn(manager));
+        manager.CompleteCurrentAnomaly();
+        LogAssert.Expect(LogType.Error, "No active anomaly to complete.");
+        Assert.IsFalse(manager.CompleteCurrentAnomaly());
+        Assert.AreEqual(1, manager.GetCompletedAnomalyCount());
     }
 
     [Test]
-    public void SpawnAnomaly_WithOnlyNullSpawnPoints_LogsError()
+    public void ResetRun_ClearsCompletedHistoryAndPermitsFreshSelection()
     {
-        spawnPoints = new Transform[] { null };
+        prefabs = new[] { prefabs[0] };
+        AnomalyManager first = CreateManager();
+        GameObject clone = Spawn(first);
+        Assert.IsTrue(first.CompleteCurrentAnomaly());
+        Unload(first, clone);
+
+        AnomalyManager.ResetRun();
+        AnomalyManager next = CreateManager();
+        Assert.AreEqual(0, next.GetCompletedAnomalyCount());
+        Assert.IsNotNull(Spawn(next));
+        Assert.AreEqual(0, next.CurrentAnomalyIndex);
+    }
+
+    [Test]
+    public void ResetRun_AlsoDiscardsPendingRetrySelection()
+    {
+        AnomalyManager first = CreateManager();
+        GameObject clone = Spawn(first);
+        Unload(first, clone);
+        AnomalyManager.ResetRun();
+
+        // After reset, previously active anomaly is no longer specially reserved.
+        AnomalyManager next = CreateManager();
+        Assert.AreEqual(0, next.GetCompletedAnomalyCount());
+        Assert.IsNotNull(Spawn(next));
+        Assert.IsTrue(next.HasUnusedAnomalies());
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void MissingDependencyArray_LogsErrorWithoutSpawning(bool missingAnomalies)
+    {
         AnomalyManager manager = CreateManager();
+        if (missingAnomalies) manager.anomalies = null;
+        else manager.spawnPoints = null;
+        LogAssert.Expect(LogType.Error, "Anomalies or spawn points are missing.");
+        Assert.IsNull(Spawn(manager));
+        Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public void EmptyDependencyArray_LogsErrorWithoutSpawning(bool emptyAnomalies)
+    {
+        AnomalyManager manager = CreateManager();
+        if (emptyAnomalies) manager.anomalies = new GameObject[0];
+        else manager.spawnPoints = new Transform[0];
+        LogAssert.Expect(LogType.Error, "Anomalies or spawn points are missing.");
+        Assert.IsNull(Spawn(manager));
+        Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
+    }
+
+    [Test]
+    public void AllNullPrefabs_AreConsideredUnavailable()
+    {
+        AnomalyManager manager = CreateManager();
+        manager.anomalies = new GameObject[] { null, null };
+        Assert.IsFalse(manager.HasUnusedAnomalies());
+        LogAssert.Expect(LogType.Log, "All anomalies completed.");
+        Assert.IsNull(Spawn(manager));
+    }
+
+    [Test]
+    public void AllNullSpawnPoints_ProduceExplicitError()
+    {
+        AnomalyManager manager = CreateManager();
+        manager.spawnPoints = new Transform[] { null, null };
         LogAssert.Expect(LogType.Error, "No valid spawn points found.");
-
-        Assert.IsNull(SpawnAndFindClone(manager));
+        Assert.IsNull(Spawn(manager));
         Assert.AreEqual(-1, manager.CurrentAnomalyIndex);
     }
 
     [Test]
-    public void SpawnAnomaly_IgnoresNullPrefabEntries()
+    public void NullPrefabEntries_AreSkipped()
     {
-        prefabs = new GameObject[] { null, prefabs[1], null };
         AnomalyManager manager = CreateManager();
-
-        GameObject clone = SpawnAndFindClone(manager);
-
-        Assert.IsNotNull(clone);
+        manager.anomalies = new GameObject[] { null, prefabs[1], null };
+        Assert.IsNotNull(Spawn(manager));
         Assert.AreEqual(1, manager.CurrentAnomalyIndex);
     }
+
     [Test]
-    public void SpawnAnomaly_IgnoresNullSpawnPoints()
+    public void NullSpawnEntries_AreSkipped()
     {
-        spawnPoints = new Transform[] { null, spawnPoints[1] };
         AnomalyManager manager = CreateManager();
-
-        GameObject clone = SpawnAndFindClone(manager);
-
+        manager.spawnPoints = new Transform[] { null, spawnPoints[1] };
+        GameObject clone = Spawn(manager);
         Assert.IsNotNull(clone);
         Assert.AreEqual(spawnPoints[1].position, clone.transform.position);
     }
 
     [Test]
-    public void HasUnusedAnomalies_WithEmptyArray_ReturnsFalse()
+    public void DeletedPendingAnomaly_IsReplacedByRemainingValidAnomaly()
     {
-        prefabs = new GameObject[0];
-        AnomalyManager manager = CreateManager();
+        prefabs = new[] { prefabs[0], prefabs[1] };
+        AnomalyManager first = CreateManager();
+        GameObject clone = Spawn(first);
+        int selected = first.CurrentAnomalyIndex;
+        Unload(first, clone);
+        Object.DestroyImmediate(prefabs[selected]);
+        prefabs[selected] = null;
 
+        AnomalyManager next = CreateManager();
+        Assert.IsNotNull(Spawn(next));
+        Assert.AreEqual(1 - selected, next.CurrentAnomalyIndex);
+    }
+
+    [Test]
+    public void HasUnusedAnomalies_WithNullArray_ReturnsFalse()
+    {
+        AnomalyManager manager = CreateManager();
+        manager.anomalies = null;
         Assert.IsFalse(manager.HasUnusedAnomalies());
+    }
+
+    // This documents a desired anti-duplication requirement; the current implementation
+    // instantiates again when SpawnAnomaly() is called twice without a scene reload.
+    [Test, Explicit("Known gap: SpawnAnomaly currently permits two active clones.")]
+    [Category("KnownGap")]
+    public void RepeatedSpawnCall_ShouldNotCreateTwoActiveClones()
+    {
+        AnomalyManager manager = CreateManager();
+        Assert.IsNotNull(Spawn(manager));
+        int selected = manager.CurrentAnomalyIndex;
+        GameObject firstClone = GameObject.Find(prefabs[selected].name + "(Clone)");
+        SpawnMethod.Invoke(manager, null);
+        GameObject[] all = Object.FindObjectsByType<GameObject>();
+        int count = 0;
+        foreach (GameObject obj in all)
+            if (obj.name == prefabs[selected].name + "(Clone)") count++;
+        Assert.AreEqual(1, count, "Repeated spawning created a duplicate instance.");
+        Assert.IsNotNull(firstClone);
     }
 
     private AnomalyManager CreateManager()
     {
-        GameObject obj = Track(new GameObject("AnomalyUnitTest_Manager"));
+        GameObject obj = Own(new GameObject(Prefix + "Manager"));
         AnomalyManager manager = obj.AddComponent<AnomalyManager>();
         manager.anomalies = prefabs;
         manager.spawnPoints = spawnPoints;
         return manager;
     }
 
-    private GameObject[] CreatePrefabs(int count)
-    {
-        GameObject[] result = new GameObject[count];
-        for (int i = 0; i < count; i++)
-            result[i] = Track(new GameObject("AnomalyUnitTest_Prefab_" + i));
-        return result;
-    }
-
-    private Transform[] CreateSpawnPoints(int count)
-    {
-        Transform[] result = new Transform[count];
-        for (int i = 0; i < count; i++)
-        {
-            GameObject obj = Track(new GameObject("AnomalyUnitTest_Spawn_" + i));
-            obj.transform.position = new Vector3(i * 10f, 0f, i * 5f);
-            result[i] = obj.transform;
-        }
-        return result;
-    }
-
-    private GameObject Track(GameObject obj)
-    {
-        testObjects.Add(obj);
-        return obj;
-    }
-    // Unity doesn't call MonoBehaviour.Start() in Edit Mode tests,
-    // so invoke the private spawning method explicitly.
-    private GameObject SpawnAndFindClone(AnomalyManager manager)
+    private GameObject Spawn(AnomalyManager manager)
     {
         SpawnMethod.Invoke(manager, null);
-
-        // Each test ensures there's at most one live anomaly instance.
+        if (manager.anomalies == null) return null;
         foreach (GameObject prefab in manager.anomalies)
         {
-            if (prefab == null)
-                continue;
-
+            if (prefab == null) continue;
             GameObject clone = GameObject.Find(prefab.name + "(Clone)");
-            if (clone != null && !spawnedClones.Contains(clone))
+            if (clone != null && !clones.Contains(clone))
             {
-                spawnedClones.Add(clone);
+                clones.Add(clone);
                 return clone;
             }
         }
         return null;
     }
 
-    private bool IsAtValidSpawnPoint(Vector3 position)
+    private void Unload(AnomalyManager manager, GameObject clone)
+    {
+        if (clone != null) Object.DestroyImmediate(clone);
+        if (manager != null) Object.DestroyImmediate(manager.gameObject);
+    }
+
+    private bool AtValidSpawn(Vector3 position)
     {
         foreach (Transform point in spawnPoints)
-        {
-            if (point != null && point.position == position)
-                return true;
-        }
+            if (point != null && point.position == position) return true;
         return false;
+    }
+
+    private GameObject[] MakePrefabs(int count)
+    {
+        GameObject[] values = new GameObject[count];
+        for (int i = 0; i < count; i++) values[i] = Own(new GameObject(Prefix + "Prefab" + i));
+        return values;
+    }
+
+    private Transform[] MakeSpawnPoints(int count)
+    {
+        Transform[] values = new Transform[count];
+        for (int i = 0; i < count; i++)
+        {
+            GameObject obj = Own(new GameObject(Prefix + "Spawn" + i));
+            obj.transform.position = new Vector3(i * 10f, 0f, i * 4f);
+            values[i] = obj.transform;
+        }
+        return values;
+    }
+
+    private GameObject Own(GameObject obj)
+    {
+        owned.Add(obj);
+        return obj;
     }
 }
