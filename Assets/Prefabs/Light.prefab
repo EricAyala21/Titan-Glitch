@@ -42,6 +42,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8654300590787218996}
     m_Modifications:
+    - target: {fileID: 4566957891733899391, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6230609835041711519, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -133,6 +137,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8654300590787218996}
     m_Modifications:
+    - target: {fileID: 4566957891733899391, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6230609835041711519, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -224,6 +232,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8654300590787218996}
     m_Modifications:
+    - target: {fileID: 4566957891733899391, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6230609835041711519, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6230609835041711519, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.22
+      objectReference: {fileID: 0}
     - target: {fileID: 6230609835041711519, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -317,8 +337,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9179833793351275382, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179833793351275382, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
       propertyPath: m_BounceIntensity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9179833793351275382, guid: 08ee4c811cfe44445b6206d8638b0d72, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
