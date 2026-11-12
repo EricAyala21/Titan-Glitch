@@ -8368,6 +8368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   gameAudio: {fileID: 24100000, guid: 2a1d58a2b35cb4c4a9ce52992c783cb0, type: 2}
   musicAudio: {fileID: 24100000, guid: 704dc385ab5cc4baab0e808a3bc751f2, type: 2}
+  resolutionDropdown: {fileID: 855600353}
 --- !u!1001 &1248405035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14001,18 +14002,30 @@ MonoBehaviour:
   m_MultiSelect: 0
   m_Options:
     m_Options:
-    - m_Text: Option A
+    - m_Text: Low
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Option B
+    - m_Text: Medium
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Option C
+    - m_Text: High
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1246175843}
+        m_TargetAssemblyTypeName: Settings, Assembly-CSharp
+        m_MethodName: setQuality
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &2010866190
 MonoBehaviour:

@@ -3,27 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using TMPro;
+
 public class Settings : MonoBehaviour
 {
     public AudioMixer gameAudio;
     public AudioMixer musicAudio;
-    public Dropdown resolutionDropdown;
+    public TMP_Dropdown resolutionDropdown;
 
     Resolution[] resolutions;
     
-    void start(){
+    void Start(){
         
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
-
         List<string> options = new List<string>();
-
+        HashSet<string> uniqueRes = new HashSet<string>();
         int currentResolutionIndex = 0;
 
         for(int i =0; i < resolutions.Length;i++ )
         {
             string option = resolutions[i].width + "x" +resolutions[i].height;
-            options.Add(option);
+            if(uniqueRes.Add(option)){
+                options.Add(option);
+            }
             if(resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height){
                 currentResolutionIndex = i;
             }
