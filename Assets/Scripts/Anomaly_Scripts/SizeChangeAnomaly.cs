@@ -22,7 +22,7 @@ public class SizeChangeAnomaly : AnomalyBase
         }
 
         anomalyActive = true;
-        targetObject.localScale = anomalyScale;
+        targetObject.localScale = Vector3.Scale(originalScale, anomalyScale);
         Debug.Log("SizeChangeAnomaly activated: Object scale changed to " + anomalyScale);
     }
 
