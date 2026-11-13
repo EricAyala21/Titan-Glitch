@@ -2,7 +2,8 @@
     "name": "ManagerScripts",
     "rootNamespace": "",
     "references": [
-        "GUID:274f600cbdbffb74ea1b0680cda06791"
+        "GUID:274f600cbdbffb74ea1b0680cda06791",
+        "GUID:24f389a183a0efd4ca953a51485cfd7c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

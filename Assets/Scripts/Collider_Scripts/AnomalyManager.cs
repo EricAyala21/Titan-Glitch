@@ -105,16 +105,31 @@ public class AnomalyManager : MonoBehaviour
 
         CurrentAnomalyIndex = activeAnomalyIndex;
 
-        Instantiate(
-            anomalies[activeAnomalyIndex],
-            spawnPoints[activeSpawnIndex].position,
-            Quaternion.identity
-        );
+        GameObject spawnedAnomaly = Instantiate(
+    anomalies[activeAnomalyIndex],
+    spawnPoints[activeSpawnIndex].position,
+    Quaternion.identity
+);
 
-        Debug.Log(
-            (retryPrevious ? "Retrying anomaly: " : "New anomaly: ") +
-            anomalies[activeAnomalyIndex].name
-        );
+AnomalyBase anomalyComponent =
+    spawnedAnomaly.GetComponentInChildren<AnomalyBase>();
+
+if (anomalyComponent != null)
+{
+    anomalyComponent.ActivateAnomaly();
+
+    Debug.Log("Activated anomaly: " + spawnedAnomaly.name);
+}
+else
+{
+    Debug.Log("Spawned standalone anomaly: " + spawnedAnomaly.name);
+}
+
+Debug.Log(
+    (retryPrevious ? "Retrying anomaly: " : "New anomaly: ") +
+    anomalies[activeAnomalyIndex].name
+);
+
     }
 
     // Called when the player successfully completes the level.

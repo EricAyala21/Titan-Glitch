@@ -9,12 +9,25 @@ public class ChairAnomaly : MonoBehaviour
     public float lookThreshold = 0.8f;
 
     void Start()
+{
+    GameObject playerObject = GameObject.FindWithTag("Player");
+
+    if (playerObject != null)
     {
-        player = GameObject.FindWithTag("Player").transform;
+        player = playerObject.transform;
     }
+    else
+    {
+        Debug.LogWarning("ChairAnomaly: Player not found!");
+        enabled = false;
+    }
+}
 
     void Update()
     {
+         if (player == null)
+        return;
+        
         float distanceToPlayer =
             Vector3.Distance(transform.position, player.position);
 
