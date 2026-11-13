@@ -27,7 +27,6 @@ public class Settings : MonoBehaviour
 
         gameAudio.SetFloat("gameVolume",gameVol);
         musicAudio.SetFloat("musicVolume",musicVol);
-        resolutionDropdown.set
         musicSlider.value = musicVol;
         gameSlider.value = gameVol;
 
