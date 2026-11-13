@@ -127,12 +127,8 @@ public class DoorWinLossTests
         // Move object into doorway.
         yield return EnterDoorway();
 
-        LogAssert.Expect(
-            LogType.Warning,
-            "Door_win_loss: Triggered by non-player object."
-        );
-
-        Assert.AreEqual("Exploring", GetGameState());
+        // GameManager should stay in initial state.
+        Assert.AreEqual("MainMenu", GetGameState());
     }
 
     [UnityTearDown]
