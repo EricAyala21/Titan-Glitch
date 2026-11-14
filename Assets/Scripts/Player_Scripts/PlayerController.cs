@@ -45,8 +45,23 @@ public class PlayerController : MonoBehaviour
 
     //Player's Flashlight
     public Light flashlight;
-#endregion
+    #endregion
 
+    #region Audio Variables
+
+    [Header("Footstep Audio")]
+    public AudioSource footstepAudio;
+    public AudioClip[] footstepClips;
+    public float footstepInterval = 0.5f;
+
+    private float footstepTimer = 0f;
+
+    [Header("Flashlight Audio")]
+    public AudioSource flashlightAudio;
+    public AudioClip flashlightOnSound;
+    public AudioClip flashlightOffSound;
+
+    #endregion
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -83,29 +98,44 @@ public class PlayerController : MonoBehaviour
 
     public void OnFlashlight()
     {
-        // Toggle flashlight on and off
-        flashlight.enabled = !flashlight.enabled;
-    }
+        if (flashlight == null)
+            return;
 
+        flashlight.enabled = !flashlight.enabled;
+
+        if (flashlightAudio == null)
+            return;
+
+        if (flashlight.enabled)
+        {
+            if (flashlightOnSound != null)
+                flashlightAudio.PlayOneShot(flashlightOnSound);
+        }
+        else
+        {
+            if (flashlightOffSound != null)
+                flashlightAudio.PlayOneShot(flashlightOffSound);
+        }
+    }
     public void OnZoom(InputValue value)
     {
         // camera.fieldOfView = Mathf.Lerp(camera.fieldOfView, zoomFOV, Time.deltaTime * zoomSpeed);
         // camera.fieldOfView = zoomFOV;
         zooming = !zooming; // start zoom in/out
     }
-#endregion
+    #endregion
 
     // Update is called once per frame
     void Update()
     {
-        // Call Handlers denoted below to control the player
         HandleMovement();
         HandleCamera();
         HandleZoom();
+        HandleFootsteps();
     }
 
 
-#region Handlers
+    #region Handlers
     void HandleMovement()
     {
 
@@ -132,7 +162,35 @@ public class PlayerController : MonoBehaviour
 
 
     }
+    void HandleFootsteps()
+    {
+        bool isMoving = moveInput.sqrMagnitude > 0.01f;
 
+        if (isMoving && controller.isGrounded)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                PlayFootstep();
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+    }
+
+    void PlayFootstep()
+    {
+        if (footstepAudio == null || footstepClips.Length == 0)
+            return;
+
+        int randomIndex = Random.Range(0, footstepClips.Length);
+
+        footstepAudio.PlayOneShot(footstepClips[randomIndex]);
+    }
     void HandleCamera()
     {
         //Read Mouse Horizontal Movements
