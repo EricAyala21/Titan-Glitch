@@ -19,7 +19,7 @@ public class TutorialLevelTransition : MonoBehaviour
     {
         if(collider.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene("MainLevel");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);//iterates to the next scene 
         }
 
     }
