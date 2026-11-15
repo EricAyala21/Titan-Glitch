@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private Door_win_loss DoorSide;
     [SerializeField] private AnomalyManager anomalyManager;
+
     public event System.Action<GameState> OnStateChanged;
 
     public enum GameState
@@ -50,17 +51,16 @@ public class GameManager : MonoBehaviour
 
     public void DoorSelected(DoorType selectedDoor)
     {
-       
         if (selectedDoor == DoorType.Anomaly)
         {
-            // Currently the successful door.
             Debug.Log("Anomaly Door Selected");
+
             ChangeState(GameState.Progression);
         }
         else if (selectedDoor == DoorType.NoAnomaly)
         {
-            // Currently the incorrect door.
             Debug.Log("No Anomaly Door Selected");
+
             ChangeState(GameState.Failure);
         }
     }
@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Level Failed - Retrying Same Anomaly");
 
+        // Do not change music.
+        // The current song or music timer continues.
     }
 
     private void EnterProgression()
@@ -83,7 +85,9 @@ public class GameManager : MonoBehaviour
 
         if (anomalyManager.CurrentAnomalyIndex < 0)
         {
-            Debug.LogError("No active anomaly to complete.");
+            Debug.LogError(
+                "No active anomaly to complete."
+            );
             return;
         }
 
@@ -91,18 +95,26 @@ public class GameManager : MonoBehaviour
         bool allCompleted =
             anomalyManager.CompleteCurrentAnomaly();
 
-        // Check if there are any anomalies remaining.
+        // Check if all anomalies have been completed.
         if (allCompleted)
         {
             ChangeState(GameState.Victory);
             return;
         }
 
-        Debug.Log("Level Passed - Loading Next Anomaly");
+        Debug.Log(
+            "Level Passed - Loading Next Anomaly"
+        );
 
-        
+        // Play a new random song for the next level.
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayRandomLevelSong();
+        }
+
         CurrentState = GameState.Exploring;
 
+        // Reload scene with a new unused anomaly.
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().buildIndex
         );
@@ -110,23 +122,28 @@ public class GameManager : MonoBehaviour
 
     private void EnterVictory()
     {
-        
         Debug.Log("You Win!");
 
-      
+        // No new level song is triggered.
     }
 
-    // Use this when the player starts a completely new game.
+    // Use when the player starts a new game.
     public void StartNewGame()
     {
         Time.timeScale = 1f;
+
         AnomalyManager.ResetRun();
+
+        // Start fresh music for the new game.
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayRandomLevelSong();
+        }
 
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().buildIndex
         );
     }
-
 
     public void RetryLevel()
     {
@@ -135,7 +152,8 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        // Reload without completing the current anomaly.
+        // Keep the current music playing.
+        // Reload without completing the anomaly.
         SceneManager.LoadScene(
             SceneManager.GetActiveScene().buildIndex
         );
