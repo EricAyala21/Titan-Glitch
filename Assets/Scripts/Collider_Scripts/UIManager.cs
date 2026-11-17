@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject winMenu;
     public GameObject loseMenu;
-
+    public GameObject settingsMenu;
     public GameManager gameManager;
 
     private void OnEnable()
@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
         pauseMenu.SetActive(false);
         winMenu.SetActive(false);
         loseMenu.SetActive(false);
-
+        settingsMenu.SetActive(false);
         HandleStateChanged(gameManager.CurrentState);
     }
 
@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
+            settingsMenu.SetActive(false);
         }
     }
 
@@ -124,6 +125,21 @@ public class UIManager : MonoBehaviour
     public void RetryButton()
     {
         gameManager.RetryLevel();
+    }
+
+    public void settingsToggle()
+    {
+        pauseMenu.SetActive(false);
+
+        settingsMenu.SetActive(true);
+
+
+    }
+    
+    public void backButton()
+    {
+        settingsMenu.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 
     public void PlayAgainButton()
