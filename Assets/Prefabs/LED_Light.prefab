@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7563347969073179314}
   - component: {fileID: 4733586216735968291}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,9 +42,9 @@ Light:
   m_GameObject: {fileID: 247451266017818588}
   m_Enabled: 1
   serializedVersion: 13
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 0.9019608, g: 0.9607843, b: 0.8352941, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.05
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -251,7 +251,7 @@ GameObject:
   - component: {fileID: 6302340277298496720}
   - component: {fileID: 5466756681431808610}
   m_Layer: 0
-  m_Name: Point LIght
+  m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 0.9019608, g: 0.9607843, b: 0.8352941, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.05
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 8231967898015789036}
   - component: {fileID: 2030742510664744351}
   m_Layer: 0
-  m_Name: Point Light (1)
+  m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ Light:
   serializedVersion: 13
   m_Type: 2
   m_Color: {r: 0.9019608, g: 0.9607843, b: 0.8352941, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 0.05
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -655,7 +655,7 @@ GameObject:
   - component: {fileID: 6198120403689796940}
   - component: {fileID: 4300696629118553554}
   m_Layer: 0
-  m_Name: Spot Light
+  m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,9 +685,9 @@ Light:
   m_GameObject: {fileID: 8777931096188358305}
   m_Enabled: 1
   serializedVersion: 13
-  m_Type: 0
+  m_Type: 2
   m_Color: {r: 0.9019608, g: 0.9607843, b: 0.8352941, a: 1}
-  m_Intensity: 1.5
+  m_Intensity: 0.05
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
