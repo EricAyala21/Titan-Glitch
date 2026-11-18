@@ -11667,9 +11667,33 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4438322080587135795, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_Dithering
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438322080587135795, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_Antialiasing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5205605933120058002, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914807762940735626, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914807762940735626, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914807762940735626, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5914807762940735626, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6699058034384154141, guid: ae9927d38def0014cb92ea78720d109a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
