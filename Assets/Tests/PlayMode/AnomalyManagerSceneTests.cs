@@ -32,6 +32,19 @@ public class AnomalyManagerSceneTests
     public IEnumerator TearDown()
     {
         AnomalyManager.ResetRun();
+        yield return CleanUpScene();
+    }
+
+    // Leaves a clean, empty scene behind so later test classes don't see MainLevel's
+    // Player/GameManager/PlayerInput, and undoes any Time.timeScale change.
+    private static IEnumerator CleanUpScene()
+    {
+        Time.timeScale = 1f;
+        Scene clean = SceneManager.CreateScene("TestCleanScene_" + System.Guid.NewGuid().ToString("N"));
+        SceneManager.SetActiveScene(clean);
+        Scene level = SceneManager.GetSceneByName(SceneName);
+        if (level.IsValid() && level.isLoaded)
+            yield return SceneManager.UnloadSceneAsync(level);
         yield return null;
     }
 
