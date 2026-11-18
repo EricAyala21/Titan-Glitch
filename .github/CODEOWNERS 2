@@ -1,0 +1,11 @@
+﻿# CODEOWNERS: automatically requests review from these owners when matching files change.
+# Part of SOC 2 CC8.1 change management (gap G4).
+
+# CI/CD workflows
+/.github/workflows/    @EricAyala21 @DanielAkala
+
+# Assembly definition files (a bad change can break compilation or the player build)
+*.asmdef               @DanielAkala @RicardoRodriguez00
+
+# Automated tests
+/Assets/Tests/         @DanielAkala @mosesbui

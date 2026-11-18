@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="22" result="Failed(Child)" total="22" passed="19" failed="1" inconclusive="0" skipped="2" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-06 00:26:49Z" end-time="2026-11-06 00:26:52Z" duration="2.5350361">
+  <test-suite type="TestSuite" id="1119" name="Titan-Glitch-Game" fullname="Titan-Glitch-Game" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-06 00:26:49Z" end-time="2026-11-06 00:26:52Z" duration="2.535036" total="22" passed="19" failed="1" inconclusive="0" skipped="2" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1148" name="PlayMode.dll" fullname="C:/Titan-Glitch/Library/ScriptAssemblies/PlayMode.dll" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-06 00:26:49Z" end-time="2026-11-06 00:26:52Z" duration="2.529121" total="22" passed="19" failed="1" inconclusive="0" skipped="2" asserts="0">
+      <properties>
+        <property name="_PID" value="8712" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestFixture" id="1125" name="DoorWinLossTests" fullname="DoorWinLossTests" classname="DoorWinLossTests" runstate="Runnable" testcasecount="2" result="Failed" site="Child" start-time="2026-11-06 00:26:49Z" end-time="2026-11-06 00:26:50Z" duration="0.352991" total="2" passed="1" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-case id="1126" name="LeftDoor_TriggersProgression" fullname="DoorWinLossTests.LeftDoor_TriggersProgression" methodname="LeftDoor_TriggersProgression" classname="DoorWinLossTests" runstate="Runnable" seed="1170338846" result="Passed" start-time="2026-11-06 00:26:49Z" end-time="2026-11-06 00:26:50Z" duration="0.118529" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Anomaly Door Selected
+AnomalyManager reference is missing!
+]]></output>
+        </test-case>
+        <test-case id="1127" name="NonPlayer_DoesNotTriggerDoor" fullname="DoorWinLossTests.NonPlayer_DoesNotTriggerDoor" methodname="NonPlayer_DoesNotTriggerDoor" classname="DoorWinLossTests" runstate="Runnable" seed="1187664673" result="Failed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.215173" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <failure>
+            <message><![CDATA[  Expected string length 8 but was 9. Strings differ at index 0.
+  Expected: "MainMenu"
+  But was:  "Exploring"
+  -----------^
+]]></message>
+            <stack-trace><![CDATA[at DoorWinLossTests+<NonPlayer_DoesNotTriggerDoor>d__12.MoveNext () [0x0004a] in C:\Titan-Glitch\Assets\Tests\PlayMode\TriggerWinLossTest.cs:131
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__8.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@7a3849e09bd0\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:52
+]]></stack-trace>
+          </failure>
+          <output><![CDATA[Door_win_loss: Triggered by non-player object.
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1120" name="FlashlightInputTetss" fullname="FlashlightInputTetss" classname="FlashlightInputTetss" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.157089" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1121" name="PressF_TurnsFlashlightOn" fullname="FlashlightInputTetss.PressF_TurnsFlashlightOn" methodname="PressF_TurnsFlashlightOn" classname="FlashlightInputTetss" runstate="Runnable" seed="1273078902" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.096687" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Player active: True
+PlayerInput enabled: True
+PlayerInput active: True
+Current map: Player
+]]></output>
+        </test-case>
+        <test-case id="1122" name="PressFAgain_TurnsFlashlightOff" fullname="FlashlightInputTetss.PressFAgain_TurnsFlashlightOff" methodname="PressFAgain_TurnsFlashlightOff" classname="FlashlightInputTetss" runstate="Runnable" seed="800871568" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.012718" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Player active: True
+PlayerInput enabled: True
+PlayerInput active: True
+Current map: Player
+]]></output>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1123" name="PlayModeTest" fullname="PlayModeTest" classname="PlayModeTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.142363" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1124" name="BasicTest" fullname="PlayModeTest.BasicTest" methodname="BasicTest" classname="PlayModeTest" runstate="Runnable" seed="745141601" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.116892" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1128" name="UIManagerFunctionalTests" fullname="UIManagerFunctionalTests" classname="UIManagerFunctionalTests" runstate="Runnable" testcasecount="16" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:52Z" duration="1.503358" total="16" passed="14" failed="0" inconclusive="0" skipped="2" asserts="0">
+        <properties>
+          <property name="Category" value="GameplayRegression" />
+        </properties>
+        <test-case id="1137" name="ChangingFromVictoryToFailure_SwapsVisibleEndMenu" fullname="UIManagerFunctionalTests.ChangingFromVictoryToFailure_SwapsVisibleEndMenu" methodname="ChangingFromVictoryToFailure_SwapsVisibleEndMenu" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1410173676" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.050308" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[You Win!
+Level Failed - Retrying Same Anomaly
+]]></output>
+        </test-case>
+        <test-case id="1141" name="DisablingUIManager_UnsubscribesFromEvents" fullname="UIManagerFunctionalTests.DisablingUIManager_UnsubscribesFromEvents" methodname="DisablingUIManager_UnsubscribesFromEvents" classname="UIManagerFunctionalTests" runstate="Runnable" seed="545765398" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.114400" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[You Win!
+]]></output>
+        </test-case>
+        <test-case id="1145" name="ExploringAfterVictory_ShouldUnfreezeGameplay" fullname="UIManagerFunctionalTests.ExploringAfterVictory_ShouldUnfreezeGameplay" methodname="ExploringAfterVictory_ShouldUnfreezeGameplay" classname="UIManagerFunctionalTests" runstate="Explicit" seed="1661947824" result="Skipped" label="Explicit" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.000004" asserts="0">
+          <properties>
+            <property name="_SKIPREASON" value="Known gap: changing to Exploring after Victory leaves time frozen." />
+            <property name="Category" value="KnownGap" />
+          </properties>
+          <reason>
+            <message><![CDATA[Known gap: changing to Exploring after Victory leaves time frozen.]]></message>
+          </reason>
+        </test-case>
+        <test-case id="1134" name="GameManagerFailureEvent_OpensOnlyLoseMenuAndFreezesTime" fullname="UIManagerFunctionalTests.GameManagerFailureEvent_OpensOnlyLoseMenuAndFreezesTime" methodname="GameManagerFailureEvent_OpensOnlyLoseMenuAndFreezesTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1479067826" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:50Z" duration="0.103633" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Level Failed - Retrying Same Anomaly
+]]></output>
+        </test-case>
+        <test-case id="1133" name="GameManagerVictoryEvent_OpensOnlyWinMenuAndFreezesTime" fullname="UIManagerFunctionalTests.GameManagerVictoryEvent_OpensOnlyWinMenuAndFreezesTime" methodname="GameManagerVictoryEvent_OpensOnlyWinMenuAndFreezesTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1275210659" result="Passed" start-time="2026-11-06 00:26:50Z" end-time="2026-11-06 00:26:51Z" duration="0.115278" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[You Win!
+]]></output>
+        </test-case>
+        <test-case id="1144" name="MainMenuButton_ActivatesMainMenuScene" fullname="UIManagerFunctionalTests.MainMenuButton_ActivatesMainMenuScene" methodname="MainMenuButton_ActivatesMainMenuScene" classname="UIManagerFunctionalTests" runstate="Explicit" seed="1214561258" result="Skipped" label="Explicit" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.000029" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="_SKIPREASON" value="Run separately: loads the Main-Menu scene." />
+            <property name="Category" value="SceneIntegration" />
+          </properties>
+          <reason>
+            <message><![CDATA[Run separately: loads the Main-Menu scene.]]></message>
+          </reason>
+        </test-case>
+        <test-case id="1136" name="PausedThenFailure_HidesPauseAndShowsLose" fullname="UIManagerFunctionalTests.PausedThenFailure_HidesPauseAndShowsLose" methodname="PausedThenFailure_HidesPauseAndShowsLose" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1012385871" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.082979" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Level Failed - Retrying Same Anomaly
+]]></output>
+        </test-case>
+        <test-case id="1135" name="PausedThenVictory_HidesPauseAndShowsWin" fullname="UIManagerFunctionalTests.PausedThenVictory_HidesPauseAndShowsWin" methodname="PausedThenVictory_HidesPauseAndShowsWin" classname="UIManagerFunctionalTests" runstate="Runnable" seed="440187551" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.114137" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[You Win!
+]]></output>
+        </test-case>
+        <test-case id="1143" name="QuitButton_InEditor_LogsIntentAndResumesTime" fullname="UIManagerFunctionalTests.QuitButton_InEditor_LogsIntentAndResumesTime" methodname="QuitButton_InEditor_LogsIntentAndResumesTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="533490436" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.084771" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Quit!
+]]></output>
+        </test-case>
+        <test-case id="1142" name="ReEnablingUIManager_ResubscribesToStateEvents" fullname="UIManagerFunctionalTests.ReEnablingUIManager_ResubscribesToStateEvents" methodname="ReEnablingUIManager_ResubscribesToStateEvents" classname="UIManagerFunctionalTests" runstate="Runnable" seed="743622293" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.132246" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Level Failed - Retrying Same Anomaly
+]]></output>
+        </test-case>
+        <test-case id="1129" name="Start_HidesAllMenus" fullname="UIManagerFunctionalTests.Start_HidesAllMenus" methodname="Start_HidesAllMenus" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1026235672" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.081880" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-suite type="ParameterizedMethod" id="1140" name="TogglePause_AfterGameOver_CannotDismissEndMenu" fullname="UIManagerFunctionalTests.TogglePause_AfterGameOver_CannotDismissEndMenu" classname="UIManagerFunctionalTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.281616" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-case id="1138" name="TogglePause_AfterGameOver_CannotDismissEndMenu(Victory)" fullname="UIManagerFunctionalTests.TogglePause_AfterGameOver_CannotDismissEndMenu(Victory)" methodname="TogglePause_AfterGameOver_CannotDismissEndMenu" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1018973288" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.083488" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[You Win!
+]]></output>
+          </test-case>
+          <test-case id="1139" name="TogglePause_AfterGameOver_CannotDismissEndMenu(Failure)" fullname="UIManagerFunctionalTests.TogglePause_AfterGameOver_CannotDismissEndMenu(Failure)" methodname="TogglePause_AfterGameOver_CannotDismissEndMenu" classname="UIManagerFunctionalTests" runstate="Runnable" seed="1604504817" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.116052" asserts="0">
+            <properties>
+              <property name="retryIteration" value="0" />
+              <property name="repeatIteration" value="0" />
+            </properties>
+            <output><![CDATA[Level Failed - Retrying Same Anomaly
+]]></output>
+          </test-case>
+        </test-suite>
+        <test-case id="1130" name="TogglePause_EntersPausedStateAndStopsTime" fullname="UIManagerFunctionalTests.TogglePause_EntersPausedStateAndStopsTime" methodname="TogglePause_EntersPausedStateAndStopsTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="2006332482" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:51Z" duration="0.084456" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1132" name="TogglePause_ThreeTimes_EndsPaused" fullname="UIManagerFunctionalTests.TogglePause_ThreeTimes_EndsPaused" methodname="TogglePause_ThreeTimes_EndsPaused" classname="UIManagerFunctionalTests" runstate="Runnable" seed="744584971" result="Passed" start-time="2026-11-06 00:26:51Z" end-time="2026-11-06 00:26:52Z" duration="0.134363" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+        <test-case id="1131" name="TogglePause_Twice_ResumesExplorationAndTime" fullname="UIManagerFunctionalTests.TogglePause_Twice_ResumesExplorationAndTime" methodname="TogglePause_Twice_ResumesExplorationAndTime" classname="UIManagerFunctionalTests" runstate="Runnable" seed="632094458" result="Passed" start-time="2026-11-06 00:26:52Z" end-time="2026-11-06 00:26:52Z" duration="0.081317" asserts="0">
+          <properties>
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+        </test-case>
+      </test-suite>
+      <test-suite type="TestFixture" id="1146" name="ZoomInputTests" fullname="ZoomInputTests" classname="ZoomInputTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-11-06 00:26:52Z" end-time="2026-11-06 00:26:52Z" duration="0.367555" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-case id="1147" name="RightClick_ZoomsIn" fullname="ZoomInputTests.RightClick_ZoomsIn" methodname="RightClick_ZoomsIn" classname="ZoomInputTests" runstate="Runnable" seed="508356097" result="Passed" start-time="2026-11-06 00:26:52Z" end-time="2026-11-06 00:26:52Z" duration="0.321442" asserts="0">
+          <properties>
+            <property name="_JOINTYPE" value="UnityCombinatorial" />
+            <property name="retryIteration" value="0" />
+            <property name="repeatIteration" value="0" />
+          </properties>
+          <output><![CDATA[Saving results to: C:/Users/rvrod/AppData/LocalLow/DefaultCompany/Titan-Glitch-Game\TestResults.xml
+]]></output>
+        </test-case>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
