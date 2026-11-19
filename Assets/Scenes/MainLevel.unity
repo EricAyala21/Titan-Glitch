@@ -21342,6 +21342,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b743370ac3e4ec2a1668f5455a8ef8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_Dropdown
+--- !u!1001 &2041795681
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_Name
+      value: computer3
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.706
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -20.038
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7010281
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.71313363
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90.981
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f31be39be55038b4dbc591468d4b9ccf, type: 3}
 --- !u!114 &2044078854 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8057874813825857462, guid: 57df2493795d2b84f81c7588fee48416, type: 3}
@@ -22569,3 +22626,4 @@ SceneRoots:
   - {fileID: 1452943289}
   - {fileID: 797431294}
   - {fileID: 580599223}
+  - {fileID: 2041795681}
