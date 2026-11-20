@@ -195,4 +195,8 @@ public class AnomalyManager : MonoBehaviour
         activeAnomalyIndex = -1;
         activeSpawnIndex = -1;
     }
+
 }
+
+
+
