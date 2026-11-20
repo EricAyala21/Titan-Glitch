@@ -157,4 +157,8 @@ public class GameManager : MonoBehaviour
         // retains the same active anomaly and spawn point.
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
 }
+
+
+
