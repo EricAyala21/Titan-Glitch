@@ -1,34 +1,78 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Each choice in the anomaly-selection menu corresponds to one category.
+// Multiple prefabs can share the same category.
+public enum AnomalyCategory
+{
+    WrongFloorNumber,
+    WrongObjectOrder,
+    WrongSizeOrShape,
+    SpookyElements,
+    Chase,
+    None
+}
+
 public class AnomalyManager : MonoBehaviour
 {
+    [Header("Anomaly Spawning")]
     public Transform[] spawnPoints;
     public GameObject[] anomalies;
 
+    [Header("Menu Answer for Each Anomaly Prefab")]
+    [Tooltip("Set one category for each element in Anomalies, in the same order.")]
+    public AnomalyCategory[] anomalyCategories;
+
     // Completed anomalies persist across scene reloads.
-    private static HashSet<int> completedAnomalies =
-        new HashSet<int>();
+    private static HashSet<int> completedAnomalies = new HashSet<int>();
 
     // Current anomaly and spawn location persist on failure.
     private static int activeAnomalyIndex = -1;
     private static int activeSpawnIndex = -1;
-
     public int CurrentAnomalyIndex { get; private set; } = -1;
 
     // Reset static data at the beginning of a new Play session.
-    [RuntimeInitializeOnLoadMethod(
-        RuntimeInitializeLoadType.SubsystemRegistration)]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void InitializeRun()
     {
         ResetRun();
     }
 
-    void Start()
+    private void Start()
     {
+        if (anomalyCategories == null ||
+            anomalies == null ||
+            anomalyCategories.Length != anomalies.Length)
+        {
+            Debug.LogError(
+                "AnomalyManager: Anomaly Categories must have exactly " +
+                "one entry per Anomalies element, in the same order.");
+        }
+
         SpawnAnomaly();
     }
 
+    // Returns false for missing/misconfigured answers, so a setup mistake
+    // cannot accidentally mark a player's choice as incorrect.
+    public bool TryGetCurrentAnomalyCategory(out AnomalyCategory category)
+    {
+        category = default(AnomalyCategory);
+
+        if (anomalies == null ||
+            anomalyCategories == null ||
+            anomalyCategories.Length != anomalies.Length ||
+            CurrentAnomalyIndex < 0 ||
+            CurrentAnomalyIndex >= anomalies.Length)
+        {
+            Debug.LogError(
+                "AnomalyManager: No active anomaly or the Anomaly Categories " +
+                "array is not configured to match the Anomalies array.");
+            return false;
+        }
+
+        category = anomalyCategories[CurrentAnomalyIndex];
+        return true;
+    }
     private void SpawnAnomaly()
     {
         if (anomalies == null || anomalies.Length == 0 ||
@@ -38,15 +82,13 @@ public class AnomalyManager : MonoBehaviour
             return;
         }
 
-        // Check if the previous anomaly is valid for a retry.
-        // Is there a previous anomaly that exists, is still valid, and has not already been completed?
+        // Reuse the same anomaly on a retry if it is still valid.
         bool retryPrevious =
             activeAnomalyIndex >= 0 &&
             activeAnomalyIndex < anomalies.Length &&
             anomalies[activeAnomalyIndex] != null &&
             !completedAnomalies.Contains(activeAnomalyIndex);
 
-        // find a new anomaly to use.
         if (!retryPrevious)
         {
             List<int> availableAnomalies = new List<int>();
@@ -66,15 +108,11 @@ public class AnomalyManager : MonoBehaviour
                 return;
             }
 
-            // Select a new anomaly that hasn't been completed.
-            int randomIndex =
-                Random.Range(0, availableAnomalies.Count);
-
+            int randomIndex = Random.Range(0, availableAnomalies.Count);
             activeAnomalyIndex = availableAnomalies[randomIndex];
             activeSpawnIndex = -1;
         }
 
-        // Reuse the previous spawn location when possible.
         bool validPreviousSpawn =
             activeSpawnIndex >= 0 &&
             activeSpawnIndex < spawnPoints.Length &&
@@ -87,9 +125,7 @@ public class AnomalyManager : MonoBehaviour
             for (int i = 0; i < spawnPoints.Length; i++)
             {
                 if (spawnPoints[i] != null)
-                {
                     validSpawnIndices.Add(i);
-                }
             }
 
             if (validSpawnIndices.Count == 0)
@@ -99,8 +135,7 @@ public class AnomalyManager : MonoBehaviour
             }
 
             activeSpawnIndex = validSpawnIndices[
-                Random.Range(0, validSpawnIndices.Count)
-            ];
+                Random.Range(0, validSpawnIndices.Count)];
         }
 
         CurrentAnomalyIndex = activeAnomalyIndex;
@@ -108,17 +143,14 @@ public class AnomalyManager : MonoBehaviour
         Instantiate(
             anomalies[activeAnomalyIndex],
             spawnPoints[activeSpawnIndex].position,
-            Quaternion.identity
-        );
+            Quaternion.identity);
 
         Debug.Log(
             (retryPrevious ? "Retrying anomaly: " : "New anomaly: ") +
-            anomalies[activeAnomalyIndex].name
-        );
+            anomalies[activeAnomalyIndex].name);
     }
-
-    // Called when the player successfully completes the level.
-    // Returns true when all valid anomalies are completed.
+    // Called after a correct guess. Returns true if all valid anomalies
+    // have been completed; otherwise the next scene load selects a new one.
     public bool CompleteCurrentAnomaly()
     {
         if (CurrentAnomalyIndex < 0)
@@ -128,11 +160,8 @@ public class AnomalyManager : MonoBehaviour
         }
 
         completedAnomalies.Add(CurrentAnomalyIndex);
+        Debug.Log("Completed anomaly index: " + CurrentAnomalyIndex);
 
-        Debug.Log("Completed anomaly index: " +
-                  CurrentAnomalyIndex);
-
-        // Clear current selection so the next level gets a new one.
         activeAnomalyIndex = -1;
         activeSpawnIndex = -1;
         CurrentAnomalyIndex = -1;
@@ -149,9 +178,7 @@ public class AnomalyManager : MonoBehaviour
         {
             if (anomalies[i] != null &&
                 !completedAnomalies.Contains(i))
-            {
                 return true;
-            }
         }
 
         return false;
@@ -162,7 +189,6 @@ public class AnomalyManager : MonoBehaviour
         return completedAnomalies.Count;
     }
 
-    // Start a completely new playthrough.
     public static void ResetRun()
     {
         completedAnomalies.Clear();

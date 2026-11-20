@@ -1,10 +1,8 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Door_win_loss DoorSide;
     [SerializeField] private AnomalyManager anomalyManager;
 
     public event System.Action<GameState> OnStateChanged;
@@ -12,55 +10,82 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         Exploring,
+        ChoosingAnomaly,
         Progression,
         Failure,
         Victory,
         Paused
     }
 
-    public GameState CurrentState { get; private set; }
+    public GameState CurrentState { get; private set; } = GameState.Exploring;
 
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
-
-        // Notify UIManager that the state changed.
         OnStateChanged?.Invoke(newState);
 
         switch (newState)
         {
-            case GameState.Exploring:
-                break;
-
             case GameState.Progression:
                 EnterProgression();
                 break;
-
             case GameState.Failure:
                 EnterFailure();
                 break;
-
             case GameState.Victory:
                 EnterVictory();
-                break;
-
-            case GameState.Paused:
                 break;
         }
     }
 
+    // Called by the existing Door_win_loss trigger.
     public void DoorSelected(DoorType selectedDoor)
     {
+        // Ignore repeated collision events while a menu is already open.
+        if (CurrentState != GameState.Exploring)
+            return;
+
         if (selectedDoor == DoorType.Anomaly)
         {
-            Debug.Log("Anomaly Door Selected");
-
-            ChangeState(GameState.Progression);
+            Debug.Log("Anomaly door selected - showing anomaly menu.");
+            ChangeState(GameState.ChoosingAnomaly);
         }
         else if (selectedDoor == DoorType.NoAnomaly)
         {
-            Debug.Log("No Anomaly Door Selected");
+            // Preserve current behavior of the No Anomaly door.
+            Debug.Log("No Anomaly door selected - level failed.");
+            ChangeState(GameState.Failure);
+        }
+    }
+    // Called only from one of the UIManager's answer buttons.
+    public void SubmitAnomalyGuess(AnomalyCategory selectedCategory)
+    {
+        if (CurrentState != GameState.ChoosingAnomaly)
+            return;
 
+        if (anomalyManager == null)
+        {
+            Debug.LogError("AnomalyManager reference is missing!");
+            return;
+        }
+
+        AnomalyCategory correctCategory;
+        if (!anomalyManager.TryGetCurrentAnomalyCategory(out correctCategory))
+        {
+            // Leave the menu open rather than penalizing a setup mistake.
+            return;
+        }
+
+        if (selectedCategory == correctCategory)
+        {
+            Debug.Log("Correct anomaly choice: " + selectedCategory);
+            ChangeState(GameState.Progression);
+        }
+        else
+        {
+            Debug.Log(
+                "Incorrect anomaly choice: " + selectedCategory +
+                ". Actual anomaly: " + correctCategory);
             ChangeState(GameState.Failure);
         }
     }
@@ -68,81 +93,57 @@ public class GameManager : MonoBehaviour
     private void EnterFailure()
     {
         Debug.Log("Level Failed - Retrying Same Anomaly");
-
-        // Do not change music.
-        // The current song or music timer continues.
+        // UIManager opens the existing loseMenu; its Retry button
+        // calls RetryLevel(). The active anomaly remains unchanged.
     }
 
     private void EnterProgression()
     {
         if (anomalyManager == null)
         {
-            Debug.LogError(
-                "AnomalyManager reference is missing!"
-            );
+            Debug.LogError("AnomalyManager reference is missing!");
             return;
         }
 
         if (anomalyManager.CurrentAnomalyIndex < 0)
         {
-            Debug.LogError(
-                "No active anomaly to complete."
-            );
+            Debug.LogError("No active anomaly to complete.");
             return;
         }
 
-        // Mark the current anomaly completed.
-        bool allCompleted =
-            anomalyManager.CompleteCurrentAnomaly();
+        bool allCompleted = anomalyManager.CompleteCurrentAnomaly();
 
-        // Check if all anomalies have been completed.
         if (allCompleted)
         {
             ChangeState(GameState.Victory);
             return;
         }
 
-        Debug.Log(
-            "Level Passed - Loading Next Anomaly"
-        );
+        Debug.Log("Level Passed - Loading Next Anomaly");
 
-        // Play a new random song for the next level.
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlayRandomLevelSong();
-        }
 
-        CurrentState = GameState.Exploring;
-
-        // Reload scene with a new unused anomaly.
-        SceneManager.LoadScene(
-            SceneManager.GetActiveScene().buildIndex
-        );
+        // UIManager paused the game while the answer menu was open.
+        // Reset time scale before loading the next level.
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void EnterVictory()
     {
         Debug.Log("You Win!");
-
-        // No new level song is triggered.
     }
 
-    // Use when the player starts a new game.
     public void StartNewGame()
     {
         Time.timeScale = 1f;
-
         AnomalyManager.ResetRun();
 
-        // Start fresh music for the new game.
         if (AudioManager.Instance != null)
-        {
             AudioManager.Instance.PlayRandomLevelSong();
-        }
 
-        SceneManager.LoadScene(
-            SceneManager.GetActiveScene().buildIndex
-        );
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void RetryLevel()
@@ -152,10 +153,8 @@ public class GameManager : MonoBehaviour
 
         Time.timeScale = 1f;
 
-        // Keep the current music playing.
-        // Reload without completing the anomaly.
-        SceneManager.LoadScene(
-            SceneManager.GetActiveScene().buildIndex
-        );
+        // Reload without completing the anomaly: AnomalyManager
+        // retains the same active anomaly and spawn point.
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
