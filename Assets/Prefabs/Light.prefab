@@ -41,9 +41,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8654300590787218996}
     m_Modifications:
+    - target: {fileID: 2261188665407704135, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519364987342812420, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572020596935547228, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5589806378926179984, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
       propertyPath: m_Name
       value: LED_Light_3 (1) Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841240570396751184, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6411520821581852946, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8929465064477549903, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
       propertyPath: m_LocalScale.x
@@ -115,9 +135,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8654300590787218996}
     m_Modifications:
+    - target: {fileID: 2261188665407704135, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2519364987342812420, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572020596935547228, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5589806378926179984, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
       propertyPath: m_Name
       value: LED_Light_3 (1) Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5841240570396751184, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6411520821581852946, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8929465064477549903, guid: 279101b12a5dbae47937fd0f1db6348f, type: 3}
       propertyPath: m_LocalScale.x
